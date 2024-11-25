@@ -1,12 +1,17 @@
 package frc.robot.examples.commands;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
+
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
+import static edu.wpi.first.wpilibj2.command.Commands.print;
 /**
  * I highly recommend reading the below documentation, but this class is just meant to be a quick testing and example guide for 
  * writing commands.
@@ -17,19 +22,25 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * Remember, that these commands will not run unless the robot is enabled in *some* mode. (auton, tele, test)
  * 
  */ 
-public class CmdAndTriggerExamples {    
+public class CmdExamples {    
 
-    public static Runnable out(String msg) {        
-        return () -> {
-            System.out.println(String.format("%3.1f", Timer.getFPGATimestamp()) + ":" + msg);
-        };
+    /** 
+     * Run this prior to scheduling the examples if you want to see what the scheduler is doing. 
+     * 
+     **/
+    static public void logScheduler(boolean logExecution) {
+        CommandScheduler.getInstance().onCommandInitialize(getEventHandler("Init Command:"));
+        CommandScheduler.getInstance().onCommandFinish(getEventHandler("Finish Command:"));
+        if (logExecution) {
+            CommandScheduler.getInstance().onCommandExecute(getEventHandler("Exec Command:"));
+        }
     }
 
     /** Runs forever when triggered  */
     public static void example1(XboxController ctrl) {     
      new Trigger(ctrl::getRightBumper).onTrue(
       Commands.run(out("Hello!"))
-     );
+     );     
     }
 
     /** Runs just once, not matter how long held -- commands started with "runOnce" ALWAYS run one time */
@@ -37,6 +48,24 @@ public class CmdAndTriggerExamples {
      new Trigger(ctrl::getRightBumper).whileTrue(
       Commands.runOnce(out("Hello!"))
      );
+    }
+
+    /** 
+     * Runs a command just once, then when the key is released, runs a cleanup command 
+     *
+     * Uses - start and stopping up a motor without issuing the command over and over and over.
+     *  
+     ***/
+    public static void example1b(XboxController ctrl) {     
+        /*
+     new Trigger(ctrl::getRightBumper).whileTrue(
+      Commands.startEnd(out("Started"), out("ended"))
+     );*/
+
+     // command equivalent
+     new Trigger(ctrl::getRightBumper)
+        .onTrue(print("hello!"))
+        .onFalse(print("goodbye"));
     }
 
     /** 
@@ -59,7 +88,8 @@ public class CmdAndTriggerExamples {
     public static void example2a(XboxController ctrl) {
      new Trigger(ctrl::getRightBumper).whileTrue(
       Commands.runEnd(out("Hello!"), out("Goodbye"))
-     );
+     ).onFalse(print("extra goodbye"));
+     CommandXboxController t = new CommandXboxController(0);     
     }
 
     /** 
@@ -132,7 +162,21 @@ public class CmdAndTriggerExamples {
         
     }
 
+    // SUPPORT FOR EXAMPLES
+    /* Commands.print() exists, but we're trying to demonstrate what happens with 
+       runnables.
+    */
+    static private Runnable out(String msg) {        
+        return () -> {
+            System.out.println(String.format("%3.1f", Timer.getFPGATimestamp()) + ":" + msg);
+        };        
+    }
 
-    
+    static private Consumer<Command> getEventHandler(String prefix) {
+        return (cmd) -> {
+        System.out.println(prefix+cmd.getName());
+        };
+    }
+
 
 }

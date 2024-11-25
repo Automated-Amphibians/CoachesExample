@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "LambdaExample1",
+      "request": "launch",
+      "mainClass": "frc.robot.examples.lambdas.LambdaExample1",
+      "projectName": "CoachExamples"
+    },
+    {
+      "type": "java",
       "name": "LambaExample1a",
       "request": "launch",
       "mainClass": "frc.robot.examples.lambdas.LambaExample1a",

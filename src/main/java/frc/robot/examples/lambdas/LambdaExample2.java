@@ -43,9 +43,5 @@ public class LambdaExample2 {
         return controller.getRightX();
       };
 
-      // Below is WRONG!!!! Why?
-      DoubleSupplier getRightXAxisWrong = () -> controller.getRightX();
-      // Hint -- DoubleSupplier getRightXAxisWrong = () -> 0
-
   }
 }

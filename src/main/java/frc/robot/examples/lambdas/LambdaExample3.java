@@ -33,16 +33,15 @@ public class LambdaExample3 {
           motor.startMotor();          
       };
       
+      // :: (colon colon) tells the compiler that you are asking for the
+      // code belonging to the method by that name, NOT to call the method
       BooleanSupplier isAButtonPressed = controller::getAButtonPressed;
       DoubleSupplier getLeftXAxis = controller::getLeftX;
       DoubleSupplier getRightXAxis = () -> {
-        // the below method is not evaluated until this function is called.
+        // NOTE: the code is not *executed* until this function is called.
         return controller.getRightX();
       };
 
-      // Below is WRONG!!!! Why?
-      DoubleSupplier getRightXAxisWrong = () -> controller.getRightX();
-      // Hint -- DoubleSupplier getRightXAxisWrong = () -> 0
 
   }
 }

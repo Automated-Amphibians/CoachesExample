@@ -4,16 +4,11 @@
 
 package frc.robot;
 
-import java.util.concurrent.RunnableScheduledFuture;
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.examples.commands.CmdExample;
+import frc.robot.examples.commands.CmdExamples;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -91,34 +86,29 @@ public class Robot extends TimedRobot {
     return false;
   }
 
+
+
   @Override
   public void testInit() {
-    CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.getInstance().cancelAll();   
+    CmdExamples.logScheduler(false);
 
-    int x = 1;
-
-    String myName = "Chris";
-
-    Runnable r1 = this::printHello; 
-
-    Runnable r2 = () -> {
-      System.out.println("Hello!");
-    };    
+    // CmdExamples.example1(m_controller); // on click turn on forever
+    // CmdExamples.example1a(m_controller); // on click run once
+    //CmdExamples.example1b(m_controller); // run once when clicked, with an end command
+    // CmdExamples.example2(m_controller); // run as long as held
+     CmdExamples.example2a(m_controller); // run as long as held, with an end command    
+    // CmdExamples.example3(m_controller); // run continiously on a single click, then stop on second click (toggle on off)
+    // CmdExamples.example4(m_controller);
+    // CmdExamples.example5(m_controller);
+    // CmdExamples.example6(m_controller);
     
-    BooleanSupplier bs2 = this::getABool;
-    BooleanSupplier bs1 = () -> {return false;};
-    BooleanSupplier bs3 = () -> false;
-
-    BooleanSupplier bs4 = () -> this.getABool(); // WRONG!
-        
-    DoubleSupplier ds = () -> {return 3.0;};
-
-    CommandScheduler.getInstance().schedule(new CmdExample());
+    //CmdExamples.example1a(m_controller);
   }
 
   @Override
   public void testPeriodic() {
-
+    
   }
 
   @Override

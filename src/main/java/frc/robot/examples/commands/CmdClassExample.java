@@ -3,7 +3,7 @@ package frc.robot.examples.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class CmdExample extends Command {
+public class CmdClassExample extends Command {
     double startTime;
 
     // called before run

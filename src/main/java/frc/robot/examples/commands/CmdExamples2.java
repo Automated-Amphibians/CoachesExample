@@ -18,9 +18,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  * Remember, that these commands will not run unless the robot is enabled in *some* mode. (auton, tele, test)
  * 
  */
-public class CmdAndTriggerExamples2 {
+public class CmdExamples2 {
 
-    public static Runnable out(String msg) {        
+    public static Runnable out(String msg) {          
         return () -> {
             System.out.println(String.format("%3.1f", Timer.getFPGATimestamp()) + ":" + msg);
         };

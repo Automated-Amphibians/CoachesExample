@@ -18,39 +18,39 @@ public class LambdaExample1 {
 
   @SuppressWarnings("unused")
   public static void main(String[] args) {  
+    
       int x = 1;
       String myName = "Your Name";
-      XboxController gamepad1 = new XboxController(0);
+      XboxController gamepad1 = new XboxController(0); 
 
-      // ****  Type 1, direct method/function by name assigment
+      // ****  Type 1, direct method/function by name assigment (not a Lambda!)
       LambdaExample1 lex = new LambdaExample1();
       Runnable instanceMethod = lex::printValueOfMemberVariable; 
         
       BooleanSupplier staticMethod = LambdaExample1::getARandomBool; 
 
-      // **** Type 2, lambda to an anonymous function/method
+      // **** Type 2, lambda sometimes called "anonymous function/method"
       Runnable runableMethodNoParams = () -> {
-          System.out.println("Hello");
-          System.out.println("World ");
+          System.out.print("Hello ");
+          System.out.println("World");
       };
+      runableMethodNoParams.run();
       
-      // Assign a function that always returns a value. Ordinarily your block 
+      // Lambdas that return a value. Ordinarily your block 
       // of code  would do something more interesting like call a 
       // function or method  to get data from a sensor.
       BooleanSupplier bsBlockWithReturn = () -> { return false; }; 
-      DoubleSupplier ds = () -> {
-        return 3.0;
-      };         
+      DoubleSupplier randomDouble = () -> {
+        return Math.random();
+      };
+      System.out.println(randomDouble.getAsDouble());
 
-      // **** Type 3, lambda of an expression
+      // **** Type 3, lambda using an expression
       // Similar to type 2, we've just left out "{return ....}" parts
-      BooleanSupplier bsExpression = () -> false; 
-      DoubleSupplier ds2 = () -> 3.0;
+      BooleanSupplier bsExpression = () -> Math.random() > 0.5; 
+      DoubleSupplier randomDouble2 = () -> Math.random();
+      System.out.println(bsExpression.getAsBoolean());            
+      System.out.println(randomDouble2.getAsDouble());
 
-
-      // These are WRONG, the expression is evaluated at the time of the assigment,
-      // it is not within a "block" of code
-      BooleanSupplier bsExpressionBad = () -> LambdaExample1.getARandomBool(); 
-      BooleanSupplier bsExpressionBad2 = () -> x > 3;      
   }
 }
