@@ -89,7 +89,7 @@ public class CmdExamples {
      new Trigger(ctrl::getRightBumper).whileTrue(
       Commands.runEnd(out("Hello!"), out("Goodbye"))
      ).onFalse(print("extra goodbye"));
-     CommandXboxController t = new CommandXboxController(0);     
+     
     }
 
     /** 
