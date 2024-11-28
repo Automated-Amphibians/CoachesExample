@@ -6,6 +6,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "RaceConditionDemo",
+      "request": "launch",
+      "mainClass": "frc.robot.examples.lambdas.RaceConditionDemo",
+      "projectName": "CoachExamples"
+    },
+    {
+      "type": "java",
+      "name": "LambdaConcurrency",
+      "request": "launch",
+      "mainClass": "frc.robot.examples.lambdas.LambdaConcurrency",
+      "projectName": "CoachExamples"
+    },
+    {
+      "type": "java",
       "name": "LambdaExample1",
       "request": "launch",
       "mainClass": "frc.robot.examples.lambdas.LambdaExample1",

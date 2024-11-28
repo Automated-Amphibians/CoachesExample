@@ -33,7 +33,7 @@ public class CmdExamples {
         if (logExecution) {
             CommandScheduler.getInstance().onCommandExecute(getEventHandler("Exec Command:"));
         }
-    }
+    }    
 
     /** Runs forever when triggered  */
     public static void example1(XboxController ctrl) {     
