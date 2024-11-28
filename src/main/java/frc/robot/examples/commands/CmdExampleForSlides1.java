@@ -63,8 +63,8 @@ public class CmdExampleForSlides1 {
     static public void printHelloWorldSimpleSequenceRepeatingStoppable(CommandXboxController commandXboxController) {        
         commandXboxController.a().whileTrue(
             Commands.repeatingSequence(
-            Commands.print("Hello"),
-            Commands.print("World")
+              Commands.print("Hello"),
+              Commands.print("World")
             )
         );
     }
@@ -72,8 +72,8 @@ public class CmdExampleForSlides1 {
     static public void printHelloWorldSimpleSequenceRepeatingStoppableWithStartEnd(CommandXboxController commandXboxController) {        
         commandXboxController.a().whileTrue(
             Commands.repeatingSequence(
-            Commands.print("Hello"),
-            Commands.print("World")
+              Commands.print("Hello"),
+              Commands.print("World")
             )
         ).onFalse(Commands.print("Goodbye!")).onTrue(Commands.print("Welcome!"));
     }
@@ -87,7 +87,21 @@ public class CmdExampleForSlides1 {
               Commands.print("World")
             )
           )
-          .onFalse(Commands.print("Goodbye!"))
-          ;
+          .onFalse(Commands.print("Goodbye!"));
     }
+
+    static public void printHelloButUhOh(CommandXboxController commandXboxController) {        
+        Command printHello = Commands.print("Hello!");
+        
+        commandXboxController.a()          
+          .whileTrue(
+            Commands.repeatingSequence(printHello)
+          );
+        commandXboxController.b()          
+          .whileTrue(
+            Commands.repeatingSequence(printHello)
+          );
+    }
+
+
 }

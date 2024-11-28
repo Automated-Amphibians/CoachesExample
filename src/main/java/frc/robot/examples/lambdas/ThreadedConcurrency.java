@@ -1,9 +1,9 @@
 package frc.robot.examples.lambdas;
 
-class LambdaConcurrency {
+class ThreadedConcurrency {
     private int balance;    
 
-    public LambdaConcurrency(int initialBalance) {
+    public ThreadedConcurrency(int initialBalance) {
         this.balance = initialBalance;
     }
 
@@ -22,7 +22,8 @@ class LambdaConcurrency {
         // between when the balance is read during the calculation and setting
         // of the new balance. The only solution is to "lock out" other
         // threads from doing anything (reading or writing) until my work
-        // is complete. 
+        // is complete. The atomic classes do this for you, but you MUST
+        // use them properly! (see RaceConditionDemo.java)
         //
         // The problem of "concurrent modification" can be very, very
         // difficult to unravel as it isn't 
@@ -49,7 +50,7 @@ class LambdaConcurrency {
     }
 
     public static void main(String[] args) {
-        LambdaConcurrency account = new LambdaConcurrency(100);
+        ThreadedConcurrency account = new ThreadedConcurrency(100);
 
         int day = 1;
         System.out.println("Balance at start of day "+ day +": " + account.goReadTheBalance());
