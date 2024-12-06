@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.examples.commands.CmdExampleForSlides1;
 import frc.robot.examples.commands.CmdExampleForSlides2;
@@ -18,6 +19,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
   private CommandXboxController m_gamepad = new CommandXboxController(0);
+  
 
   @Override
   public void robotInit() {
@@ -93,8 +95,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {    
-    CmdExamples.logScheduler(false);
+    //CmdExamples.logScheduler(false);
     CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.getInstance().getDefaultButtonLoop().clear();
     
     /*
      Runnable task = () -> {
@@ -104,17 +107,26 @@ public class Robot extends TimedRobot {
     cmd.schedule();    
     */
 
+    /***** EXAMPLES FOR COMMANDS *******/
+
     // CmdExampleForSlides1.printHelloWorld(); 
     // CmdExampleForSlides1.printHelloWorldSimple();
     // CmdExampleForSlides1.printHelloWorldSimpleSequence();
     // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeating();
     // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingBad();
     // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingFixed();
+
+    /***** EXAMPLES FOR TRIGGERS *******/
+
     // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppable(m_gamepad);
     // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppableWithStartEnd(m_gamepad);
     // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppableWithStartEndFixed(m_gamepad);    
     // CmdExampleForSlides1.printHelloButUhOh(m_gamepad);
 
+    // (ignore)
+     CmdExampleForSlides1.printHelloBut(m_gamepad);
+
+    /***** Examples with explanations ********/
     // CmdExamples.example1(m_controller);  // on click turn on forever
     // CmdExamples.example1a(m_controller); // on click run once
     // CmdExamples.example1b(m_controller); // run once when clicked, with an end command

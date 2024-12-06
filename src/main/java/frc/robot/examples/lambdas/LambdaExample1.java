@@ -1,9 +1,11 @@
 package frc.robot.examples.lambdas;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.DoubleConsumer;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 
 public class LambdaExample1 {
   int m_intVal = 10;
@@ -18,39 +20,36 @@ public class LambdaExample1 {
 
   @SuppressWarnings("unused")
   public static void main(String[] args) {  
-    
-      int x = 1;
-      String myName = "Your Name";
-      XboxController gamepad1 = new XboxController(0); 
-
-      // ****  Type 1, direct method/function by name assigment (not a Lambda!)
+      // ****  Type 1, direct method/function by name assignment (not a Lambda expression!)
       LambdaExample1 lex = new LambdaExample1();
-      Runnable instanceMethod = lex::printValueOfMemberVariable; 
-        
-      BooleanSupplier staticMethod = LambdaExample1::getARandomBool; 
+      Runnable instanceMethod = lex::printValueOfMemberVariable;
+       
+      BooleanSupplier staticMethod = LambdaExample1::getARandomBool;
+      
 
-      // **** Type 2, lambda sometimes called "anonymous function/method"
+      // **** Type 2, code block lambda expressions 
       Runnable runableMethodNoParams = () -> {
           System.out.print("Hello ");
           System.out.println("World");
       };
       runableMethodNoParams.run();
-      
-      // Lambdas that return a value. Ordinarily your block 
-      // of code  would do something more interesting like call a 
-      // function or method  to get data from a sensor.
-      BooleanSupplier bsBlockWithReturn = () -> { return false; }; 
+     
+      // Lambda expressions that return a value. 
+      // Ordinarily your block of code  would do something more 
+      // interesting like call a function or method to get data from a sensor.
+      BooleanSupplier bsBlockWithReturn = () -> { return false; };
       DoubleSupplier randomDouble = () -> {
         return Math.random();
       };
       System.out.println(randomDouble.getAsDouble());
 
-      // **** Type 3, lambda using an expression
+      // **** Type 3, lambda expression, no parenthesis
       // Similar to type 2, we've just left out "{return ....}" parts
-      BooleanSupplier bsExpression = () -> Math.random() > 0.5; 
+      BooleanSupplier bsExpression = () -> Math.random() > 0.5;
       DoubleSupplier randomDouble2 = () -> Math.random();
       System.out.println(bsExpression.getAsBoolean());            
       System.out.println(randomDouble2.getAsDouble());
+      DoubleConsumer fc = null;
 
   }
 }

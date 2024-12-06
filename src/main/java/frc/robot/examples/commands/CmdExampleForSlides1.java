@@ -3,20 +3,8 @@ package frc.robot.examples.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.FakeMotor;
 
 public class CmdExampleForSlides1 {
-        
-
-    // not used anywhere, not meant to be run
-    public void doNothing() {
-        FakeMotor fakeMotor = new FakeMotor();
-
-        Runnable startMotor = () -> {
-            fakeMotor.startMotor();
-        };
-        Commands.run(startMotor).schedule();
-    }
 
     static public void printHelloWorld() {
         // Create the code, assign it to a Runnable class
@@ -42,7 +30,9 @@ public class CmdExampleForSlides1 {
     static public void printHelloWorldSimpleSequenceRepeating() {        
         Commands.repeatingSequence(
           Commands.print("Hello"),
-          Commands.print("World")
+          Commands.waitSeconds(1),
+          Commands.print("World"),
+          Commands.waitSeconds(1)
         ).schedule();        
     }
 
@@ -70,12 +60,15 @@ public class CmdExampleForSlides1 {
     }
 
     static public void printHelloWorldSimpleSequenceRepeatingStoppableWithStartEnd(CommandXboxController commandXboxController) {        
-        commandXboxController.a().whileTrue(
+        commandXboxController.a()
+          .whileTrue(
             Commands.repeatingSequence(
               Commands.print("Hello"),
               Commands.print("World")
             )
-        ).onFalse(Commands.print("Goodbye!")).onTrue(Commands.print("Welcome!"));
+          )
+          .onFalse(Commands.print("Goodbye!"))
+          .onTrue(Commands.print("Welcome!"));
     }
 
     static public void printHelloWorldSimpleSequenceRepeatingStoppableWithStartEndFixed(CommandXboxController commandXboxController) {        
@@ -92,7 +85,7 @@ public class CmdExampleForSlides1 {
 
     static public void printHelloButUhOh(CommandXboxController commandXboxController) {        
         Command printHello = Commands.print("Hello!");
-        
+
         commandXboxController.a()          
           .whileTrue(
             Commands.repeatingSequence(printHello)
@@ -101,6 +94,27 @@ public class CmdExampleForSlides1 {
           .whileTrue(
             Commands.repeatingSequence(printHello)
           );
+    }
+
+    // 
+    static public void printHelloBut(CommandXboxController commandXboxController) {                
+        commandXboxController.a()
+          .onTrue(Commands.print("Welcome!"))
+          .whileTrue(
+            Commands.repeatingSequence(
+              Commands.print("Hello"),
+              Commands.waitSeconds(1), 
+              Commands.print("World"),
+              Commands.waitSeconds(1) 
+            )
+            .finallyDo(() -> {               
+              Commands.print("But wait!").schedule(); // <-- works
+              //Commands.print("finally done"); // <-- we are within a runnable! not returning to a function that handles commands
+              //System.out.println("Doh!"); // <-- would also work 
+            })
+            .withTimeout(3) 
+          )
+          .onFalse(Commands.print("Goodbye!"));
     }
 
 
