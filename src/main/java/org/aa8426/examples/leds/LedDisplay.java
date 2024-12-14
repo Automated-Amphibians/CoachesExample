@@ -1,4 +1,4 @@
-package frc.robot.examples.leds;
+package org.aa8426.examples.leds;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;

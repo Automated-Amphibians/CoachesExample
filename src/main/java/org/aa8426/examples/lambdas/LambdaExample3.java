@@ -1,10 +1,11 @@
-package frc.robot.examples.lambdas;
+package org.aa8426.examples.lambdas;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
+import org.aa8426.subsystems.FakeMotor;
+
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.FakeMotor;
 
 
 /**

@@ -5,10 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.examples.commands.CmdExampleForSlides1;
 import frc.robot.examples.commands.CmdExampleForSlides2;
@@ -17,13 +19,13 @@ import frc.robot.examples.commands.CmdExamples;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  private RobotContainer rc;
   private CommandXboxController m_gamepad = new CommandXboxController(0);
   
 
   @Override
   public void robotInit() {
-    m_robotContainer = new RobotContainer();
+    rc = new RobotContainer();
   }
 
   @Override
@@ -48,7 +50,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = rc.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -96,11 +98,11 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {    
     //CmdExamples.logScheduler(false);
-    CommandScheduler.getInstance().cancelAll();
-    CommandScheduler.getInstance().getDefaultButtonLoop().clear();
     
-    /*
-     Runnable task = () -> {
+    //InterruptionBehavior ib;
+    
+    /* 
+    Runnable task = () -> {
       System.out.println("Hello world!");
     };
     Command cmd = Commands.run(task);
@@ -109,22 +111,22 @@ public class Robot extends TimedRobot {
 
     /***** EXAMPLES FOR COMMANDS *******/
 
-    // CmdExampleForSlides1.printHelloWorld(); 
+    //CmdExampleForSlides1.printHelloWorld(); 
     // CmdExampleForSlides1.printHelloWorldSimple();
     // CmdExampleForSlides1.printHelloWorldSimpleSequence();
     // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeating();
     // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingBad();
-    // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingFixed();
+    //CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingFixed();
 
     /***** EXAMPLES FOR TRIGGERS *******/
 
-    // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppable(m_gamepad);
+     CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppable(m_gamepad);
     // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppableWithStartEnd(m_gamepad);
     // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppableWithStartEndFixed(m_gamepad);    
     // CmdExampleForSlides1.printHelloButUhOh(m_gamepad);
 
     // (ignore)
-     CmdExampleForSlides1.printHelloBut(m_gamepad);
+    // CmdExampleForSlides1.printHelloBut(m_gamepad);
 
     /***** Examples with explanations ********/
     // CmdExamples.example1(m_controller);  // on click turn on forever
@@ -136,12 +138,14 @@ public class Robot extends TimedRobot {
     // CmdExamples.example4(m_controller);
     // CmdExamples.example5(m_controller);
     // CmdExamples.example6(m_controller);
-        
+       
+    //rc.leds.setVisionSignal(Color.kRed, false);
+    //rc.leds.setIntakeSignal(Color.kGreen, true);    
   }
 
   @Override
   public void testPeriodic() {
-    
+
   }
 
   @Override

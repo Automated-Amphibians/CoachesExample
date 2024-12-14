@@ -1,4 +1,4 @@
-package frc.robot.examples.leds;
+package org.aa8426.examples.leds;
 
 import edu.wpi.first.wpilibj.util.Color;
 
@@ -15,8 +15,8 @@ public class LedSegment {
     }
 
     
-    public void setLedState(Color c) {
-        leds.setLedState(idx, len, c, false);
+    public void setLedState(Color c, boolean setData) {
+        leds.setLedState(idx, len, c, setData);
     }
     
     
