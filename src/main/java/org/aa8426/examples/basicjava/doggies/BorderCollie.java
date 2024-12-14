@@ -1,4 +1,4 @@
-package org.aa8426.examples.basicjava;
+package org.aa8426.examples.basicjava.doggies;
 
 import java.time.LocalDate;
 

@@ -5,14 +5,12 @@
 package org.aa8426.examples.robots;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import org.aa8426.RobotContainer;
 import org.aa8426.examples.commands.CmdExampleForSlides1;
 
 public class TestCommandRobot extends TimedRobot {
 
-  private Command m_autonomousCommand;
   private RobotContainer rc;  
 
   @Override
@@ -24,68 +22,6 @@ public class TestCommandRobot extends TimedRobot {
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
   }
-
-  @Override
-  public void disabledInit() {
-
-  }
-
-  @Override
-  public void disabledPeriodic() {
-
-  }
-
-  @Override
-  public void disabledExit() {
-
-  }
-
-  @Override
-  public void autonomousInit() {
-    m_autonomousCommand = rc.getAutonomousCommand();
-
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
-  }
-
-  @Override
-  public void autonomousPeriodic() {
-
-  }
-
-  @Override
-  public void autonomousExit() {
-    
-  }
-
-  @Override
-  public void teleopInit() {
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
-  }
-
-  @Override
-  public void teleopPeriodic() {
-
-  }
-
-  @Override
-  public void teleopExit() {
-
-  }
-
-  public void printHello() {
-    System.out.println("Hello!");
-  }
-
-  public boolean getABool() {
-    // pretend something interesting happens here and returns false or true based on that
-    return false;
-  }
-
-
 
   @Override
   public void testInit() {    
@@ -140,8 +76,4 @@ public class TestCommandRobot extends TimedRobot {
 
   }
 
-  @Override
-  public void testExit() {
-
-  }
 }

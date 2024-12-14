@@ -40,7 +40,7 @@ public class LambdaExample3 {
       // follow, and that it should be used as a function. Standard rules 
       // about matching method/function signatures apply.
       Runnable startMotor = () -> {
-          motor.startMotor();          
+          motor.startMotor(50);          
       };      
       
       // :: (colon colon) tells the compiler that you are asking for the

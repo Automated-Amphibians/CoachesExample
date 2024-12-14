@@ -11,9 +11,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
 public class Robot extends TimedRobot {  
 
   private RobotContainer rc;
+  private int count = 0;
 
   public Robot() {
-    super(2.5); // Set the periodic loop rate to 1 second -- this is only done to make this example readable.
+    super(1); // Set the periodic loop rate to 1 second -- this is only done to make this example readable.
   }
 
   @Override
@@ -24,7 +25,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    RobotUtils.logUptime("ROBOT PERIODIC");
+    RobotUtils.logUptime("ROBOT PERIODIC"); // try setting a breakpoint here
   }
 
   @Override
@@ -65,7 +66,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     RobotUtils.logUptime("TELEOP PERIODIC");    
-    RobotUtils.logMatchtime(" matchtime");    
+    RobotUtils.logMatchtime(" matchtime");
+    RobotUtils.logMatchtime("count = " + count);
+    count = count + 1;
+    if (count > 20) {
+      Thread.dumpStack();      
+      count = 0;
+    }
   }
 
   @Override

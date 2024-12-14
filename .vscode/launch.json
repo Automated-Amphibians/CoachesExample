@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "SimpleExampleMain",
+      "request": "launch",
+      "mainClass": "org.aa8426.examples.basicjava.SimpleExampleMain",
+      "projectName": "CoachExamples"
+    },
+    {
+      "type": "java",
       "name": "Main2",
       "request": "launch",
       "mainClass": "org.aa8426.examples.basicjava.Main2",

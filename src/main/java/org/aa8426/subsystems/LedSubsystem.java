@@ -6,7 +6,8 @@ import org.aa8426.examples.leds.LedSegment;
 import edu.wpi.first.wpilibj.util.Color;
 
 public class LedSubsystem {
-    private LedDisplay ledDisplay = new LedDisplay(0, 256);
+    // left public as an example
+    public LedDisplay ledDisplay = new LedDisplay(0, 256);
     private LedSegment visionSignal = ledDisplay.leds(0, 32);
     private LedSegment intakeSignal = ledDisplay.leds(32, 32);
 

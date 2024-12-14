@@ -34,7 +34,7 @@ public class LambdaExample2 {
 
       // Common types for wpilib commands      
       Runnable startMotor = () -> {
-          motor.startMotor();
+          motor.startMotor(50);
           System.out.println("World ");
       };
       

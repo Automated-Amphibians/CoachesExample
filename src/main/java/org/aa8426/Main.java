@@ -4,13 +4,16 @@
 
 package org.aa8426;
 
+import org.aa8426.examples.robots.LedCommandRobot;
+
 import edu.wpi.first.wpilibj.RobotBase;
 
 public final class Main {
   private Main() {}
 
   public static void main(String... args) {
-    RobotBase.startRobot(Robot::new);
-    //RobotBase.startRobot(ExampleRobot2::new);    
+    //RobotBase.startRobot(Robot::new);
+    //RobotBase.startRobot(TestCommandRobot::new);
+    RobotBase.startRobot(LedCommandRobot::new);
   }
 }
