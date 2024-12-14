@@ -9,10 +9,12 @@ import org.aa8426.subsystems.LedSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class RobotContainer {
   public FakeMotor fakeMotor = new FakeMotor();
   public LedSubsystem leds = new LedSubsystem();
+  public CommandXboxController driverPad = new CommandXboxController(0);
 
   public RobotContainer() {
     configureBindings();
@@ -25,4 +27,5 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
   }
+  
 }

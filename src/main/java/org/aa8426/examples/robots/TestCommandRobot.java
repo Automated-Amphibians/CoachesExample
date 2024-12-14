@@ -2,26 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot;
+package org.aa8426.examples.robots;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
-import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.examples.commands.CmdExampleForSlides1;
-import frc.robot.examples.commands.CmdExampleForSlides2;
-import frc.robot.examples.commands.CmdExamples;
+import org.aa8426.RobotContainer;
+import org.aa8426.examples.commands.CmdExampleForSlides1;
 
-public class Robot extends TimedRobot {
+public class TestCommandRobot extends TimedRobot {
+
   private Command m_autonomousCommand;
-
-  private RobotContainer rc;
-  private CommandXboxController m_gamepad = new CommandXboxController(0);
-  
+  private RobotContainer rc;  
 
   @Override
   public void robotInit() {
@@ -120,13 +112,13 @@ public class Robot extends TimedRobot {
 
     /***** EXAMPLES FOR TRIGGERS *******/
 
-     CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppable(m_gamepad);
-    // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppableWithStartEnd(m_gamepad);
-    // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppableWithStartEndFixed(m_gamepad);    
-    // CmdExampleForSlides1.printHelloButUhOh(m_gamepad);
+     CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppable(rc.driverPad);
+    // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppableWithStartEnd(rc.driverPad);
+    // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppableWithStartEndFixed(rc.driverPad);    
+    // CmdExampleForSlides1.printHelloButUhOh(rc.driverPad);
 
     // (ignore)
-    // CmdExampleForSlides1.printHelloBut(m_gamepad);
+    // CmdExampleForSlides1.printHelloBut(rc.driverPad);
 
     /***** Examples with explanations ********/
     // CmdExamples.example1(m_controller);  // on click turn on forever

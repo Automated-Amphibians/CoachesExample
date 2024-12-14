@@ -6,6 +6,27 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Main2",
+      "request": "launch",
+      "mainClass": "org.aa8426.examples.basicjava.Main2",
+      "projectName": "CoachExamples"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "org.aa8426.examples.basicjava.Main",
+      "projectName": "CoachExamples"
+    },
+    {
+      "type": "java",
+      "name": "Greeting",
+      "request": "launch",
+      "mainClass": "org.aa8426.examples.basicjava.Greeting",
+      "projectName": "CoachExamples"
+    },
+    {
+      "type": "java",
       "name": "RaceConditionDemo",
       "request": "launch",
       "mainClass": "frc.robot.examples.lambdas.RaceConditionDemo",

@@ -19,7 +19,7 @@ public class LedSubsystem {
     }
 
     public void setIntakeSignal(Color c, boolean setData) {
-        visionSignal.setLedState(c, setData);
+        intakeSignal.setLedState(c, setData);
     }
 
     public void setAll(Color c, boolean setData) {
