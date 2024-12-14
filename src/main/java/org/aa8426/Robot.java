@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 
 public class Robot extends TimedRobot {  
 
+  @SuppressWarnings("unused") // lets us ignore this particular 
   private RobotContainer rc;
   private int count = 0;
 
