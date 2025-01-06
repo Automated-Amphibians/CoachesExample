@@ -4,8 +4,7 @@
 
 package org.aa8426;
 
-import org.aa8426.lib.examples.RobotUtils;
-
+import org.aa8426.lib.RobotUtils;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 public class Robot extends TimedRobot {  
@@ -20,6 +19,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {  
+    /**
+     * Initialize the robot hardware within RobotContainer.
+     * 
+     * Why isn't this done in the constructor (hint: is the underlying robot hardware ready)
+     */
     rc = new RobotContainer();    
     RobotUtils.logUptime("ROBOT INIT");
   }

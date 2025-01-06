@@ -7,6 +7,8 @@ package org.aa8426.examples.robots;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
+
 import org.aa8426.RobotContainer;
 
 public class LedCommandRobot extends TimedRobot {
@@ -33,7 +35,12 @@ public class LedCommandRobot extends TimedRobot {
     rc.driverPad.b().onTrue(rc.leds.ledDisplay.entireLed().setLedStateCmd(Color.kRed));
     rc.driverPad.x().onTrue(rc.leds.ledDisplay.entireLed().setLedStateCmd(Color.kBlue));
     rc.driverPad.y().onTrue(rc.leds.ledDisplay.entireLed().setLedStateCmd(Color.kOrange));
+    Commands.repeatingSequence(
+      rc.leds.ledDisplay.entireLed().setLedStateCmd(Color.kOrange),
+      Commands.waitSeconds(1),
+      rc.leds.ledDisplay.entireLed().setLedStateCmd(Color.kBlack),
+      Commands.waitSeconds(1)
+    ).schedule();
   }
-
 
 }

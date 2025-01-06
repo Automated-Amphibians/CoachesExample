@@ -4,94 +4,18 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-    {
-      "type": "java",
-      "name": "SimpleExampleMain",
-      "request": "launch",
-      "mainClass": "org.aa8426.examples.basicjava.SimpleExampleMain",
-      "projectName": "CoachExamples"
-    },
-    {
-      "type": "java",
-      "name": "Main2",
-      "request": "launch",
-      "mainClass": "org.aa8426.examples.basicjava.Main2",
-      "projectName": "CoachExamples"
-    },
-    {
-      "type": "java",
-      "name": "Main",
-      "request": "launch",
-      "mainClass": "org.aa8426.examples.basicjava.Main",
-      "projectName": "CoachExamples"
-    },
-    {
-      "type": "java",
-      "name": "Greeting",
-      "request": "launch",
-      "mainClass": "org.aa8426.examples.basicjava.Greeting",
-      "projectName": "CoachExamples"
-    },
-    {
-      "type": "java",
-      "name": "RaceConditionDemo",
-      "request": "launch",
-      "mainClass": "frc.robot.examples.lambdas.RaceConditionDemo",
-      "projectName": "CoachExamples"
-    },
-    {
-      "type": "java",
-      "name": "LambdaConcurrency",
-      "request": "launch",
-      "mainClass": "frc.robot.examples.lambdas.LambdaConcurrency",
-      "projectName": "CoachExamples"
-    },
-    {
-      "type": "java",
-      "name": "LambdaExample1",
-      "request": "launch",
-      "mainClass": "frc.robot.examples.lambdas.LambdaExample1",
-      "projectName": "CoachExamples"
-    },
-    {
-      "type": "java",
-      "name": "LambaExample1a",
-      "request": "launch",
-      "mainClass": "frc.robot.examples.lambdas.LambaExample1a",
-      "projectName": "CoachExamples"
-    },
-    {
-      "type": "java",
-      "name": "LambaExample3",
-      "request": "launch",
-      "mainClass": "frc.robot.examples.lambdas.LambaExample3",
-      "projectName": "CoachExamples"
-    },
-    {
-      "type": "java",
-      "name": "LambaExamples2",
-      "request": "launch",
-      "mainClass": "frc.robot.examples.LambaExamples2",
-      "projectName": "CoachExamples"
-    },
-    {
-      "type": "java",
-      "name": "LambaExamples",
-      "request": "launch",
-      "mainClass": "frc.robot.examples.LambaExamples",
-      "projectName": "CoachExamples"
-    },
+
     {
       "type": "wpilib",
       "name": "WPILib Desktop Debug",
       "request": "launch",
-      "desktop": true
+      "desktop": true,
     },
     {
       "type": "wpilib",
       "name": "WPILib roboRIO Debug",
       "request": "launch",
-      "desktop": false
+      "desktop": false,
     }
   ]
 }

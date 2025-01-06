@@ -4,15 +4,14 @@ package org.aa8426.examples.basicjava;
 // IMPORTS
 import java.time.LocalDate;
 
-// CLASS DELCARATION
-public class SimpleExampleMain {
+// CLASS DECLARATION
+public class SuperSimpleExampleMain {
 
     // MEMBER VARIABLE DECLARATIONS
-    protected int state;
-    protected String another_thing;
+    protected int state;    
 
     // CONSTRUCTOR
-    public SimpleExampleMain(int state) {
+    public SuperSimpleExampleMain(int state) {
         this.state = state;
     }
 
@@ -28,11 +27,6 @@ public class SimpleExampleMain {
 
     // MAIN
     public static void main(String[] args) {
-
-        int y = 2;
-        for(int x=0;x<10;x++) {
-            System.out.println("Hello: "+x*y);
-        }
 
         LocalDate today = LocalDate.now(); // Using the imported LocalDate class
         System.out.println("Today's date is " + today + ".");        

@@ -1,4 +1,4 @@
-package org.aa8426.lib.examples;
+package org.aa8426.lib;
 
 import edu.wpi.first.wpilibj.Timer;
 

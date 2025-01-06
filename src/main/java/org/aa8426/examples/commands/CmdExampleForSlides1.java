@@ -53,8 +53,11 @@ public class CmdExampleForSlides1 {
     static public void printHelloWorldSimpleSequenceRepeatingStoppable(CommandXboxController commandXboxController) {        
         commandXboxController.a().whileTrue(
             Commands.repeatingSequence(
-              Commands.print("Hello"),
-              Commands.print("World")
+              //Commands.print("Hello"),
+              //Commands.print("World")
+              Commands.run(() -> {
+                System.out.println("ohrly");
+              })
             )
         );
     }
