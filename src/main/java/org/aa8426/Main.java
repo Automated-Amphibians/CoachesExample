@@ -4,8 +4,11 @@
 
 package org.aa8426;
 
+import org.aa8426.examples.odometry.OdometryExample;
+import org.aa8426.examples.robots.MotorTestRobot;
 import org.aa8426.examples.robots.TestCommandRobot;
 
+import edu.wpi.first.math.kinematics.Odometry;
 import edu.wpi.first.wpilibj.RobotBase;
 
 public final class Main {
@@ -13,7 +16,9 @@ public final class Main {
 
   public static void main(String... args) {
     //RobotBase.startRobot(Robot::new);
-    RobotBase.startRobot(TestCommandRobot::new);
+    //RobotBase.startRobot(TestCommandRobot::new);
     //RobotBase.startRobot(LedCommandRobot::new);
+    //RobotBase.startRobot(MotorTestRobot::new);
+    RobotBase.startRobot(OdometryExample::new);
   }
 }
