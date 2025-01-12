@@ -4,7 +4,6 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 
 /**
  * Does basic robot-centric movement of a pose using CCW positive measurements. 
@@ -89,8 +88,7 @@ public class OdometryHelper {
             this.pose2d = new Pose2d(Math.abs(this.pose2d.getX() - fieldLayout.getFieldLength()), this.pose2d.getY(), this.pose2d.getRotation());
         } else {
             this.pose2d = new Pose2d(fieldLayout.getFieldLength() - this.pose2d.getX(), this.pose2d.getY(), this.pose2d.getRotation());
-        }
-        SwerveDriveKinematics sdk;        
+        }        
         return this;
     }    
 

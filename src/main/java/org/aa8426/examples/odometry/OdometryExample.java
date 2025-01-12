@@ -46,7 +46,10 @@ public class OdometryExample extends TimedRobot {
             
             Pose2d pose = new Pose2d(tag.pose.getX(), tag.pose.getY(), tag.pose.getRotation().toRotation2d());
             OdometryHelper oh = new OdometryHelper(pose);
-            oh.moveForward(1).flip();
+            // move the robot forward 1 meter from the april tag
+            oh.moveForward(1)
+            // face the april tag (april tags by default, face the field, but we want to face the april tag)
+              .flip();
 
             field.setRobotPose(oh.get());                                
 

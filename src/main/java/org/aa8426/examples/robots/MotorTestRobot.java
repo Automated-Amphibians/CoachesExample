@@ -3,7 +3,6 @@ package org.aa8426.examples.robots;
 import org.aa8426.RobotContainer;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.wpilibj.TimedRobot;
