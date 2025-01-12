@@ -15,6 +15,31 @@ public class OdometryHelper {
     Pose2d pose2d;
     static final AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
 
+    enum AprilTagNamesForIds {
+        RED_LEFT_FEEDER,
+        RED_RIGHT_FEEDER,
+        RED_PROCESSOR,
+        RED_ENEMY_BARGE,
+        RED_ALLIANCE_BARGE,
+        RED_REEF_K,
+        RED_REEF_A,
+        RED_REEF_C,
+        RED_REEF_E,
+        RED_REEF_G,
+        RED_REEF_I,
+        BLUE_RIGHT_FEEDER,
+        BLUE_LEFT_FEEDER,
+        BLUE_ALLIANCE_BARGE,
+        BLUE_ENEMY_BARGE,
+        BLUE_PROCESSOR,
+        BLUE_REEF_C,
+        BLUE_REEF_A,
+        BLUE_REEF_K,
+        BLUE_REEF_I,
+        BLUE_REEF_G,
+        BLUE_REEF_E,
+    }
+
     public OdometryHelper(Pose2d pose2d) {
         this.pose2d = pose2d;        
     }    
@@ -83,12 +108,29 @@ public class OdometryHelper {
         return this.pose2d;
     }
 
-    public OdometryHelper mirrorPoseForAlliance() {
+    public OdometryHelper mirrorPoseForAlliance(boolean mirrorOnlyLength) {
+        double x, y;
+        Rotation2d rot;
         if (this.pose2d.getX() > (fieldLayout.getFieldLength() / 2)) {
-            this.pose2d = new Pose2d(Math.abs(this.pose2d.getX() - fieldLayout.getFieldLength()), this.pose2d.getY(), this.pose2d.getRotation());
+            x = Math.abs(this.pose2d.getX() - fieldLayout.getFieldLength());
         } else {
-            this.pose2d = new Pose2d(fieldLayout.getFieldLength() - this.pose2d.getX(), this.pose2d.getY(), this.pose2d.getRotation());
+            x = fieldLayout.getFieldLength() - this.pose2d.getX();
         }        
+        if (this.pose2d.getY() > (fieldLayout.getFieldWidth() / 2)) {
+            y = Math.abs(this.pose2d.getY() - fieldLayout.getFieldWidth());
+        } else {
+            y = fieldLayout.getFieldWidth() - this.pose2d.getY();
+        }
+        if (mirrorOnlyLength) {
+            if (this.pose2d.getRotation().getDegrees() < 180) {
+                rot = Rotation2d.fromDegrees(180 - this.pose2d.getRotation().getDegrees());
+            } else {
+                rot = Rotation2d.fromDegrees((360 - this.pose2d.getRotation().getDegrees()) + 180);            
+            }  
+        } else {
+            rot = Rotation2d.fromDegrees(this.pose2d.getRotation().getDegrees()+180);
+        }
+        this.pose2d = new Pose2d(x, y, rot);
         return this;
     }    
 
@@ -105,5 +147,6 @@ public class OdometryHelper {
         oh = new OdometryHelper(new Pose2d(0, 0, Rotation2d.fromDegrees(0)));
         oh.face(new Pose2d(4, 3, Rotation2d.fromDegrees(0)));
         System.out.println(oh.get());
+
     }
 }

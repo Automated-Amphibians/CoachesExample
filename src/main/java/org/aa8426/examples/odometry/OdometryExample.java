@@ -46,17 +46,27 @@ public class OdometryExample extends TimedRobot {
             
             Pose2d pose = new Pose2d(tag.pose.getX(), tag.pose.getY(), tag.pose.getRotation().toRotation2d());
             OdometryHelper oh = new OdometryHelper(pose);
-            // move the robot forward 1 meter from the april tag
-            oh.moveForward(1)
-            // face the april tag (april tags by default, face the field, but we want to face the april tag)
-              .flip();
 
-            field.setRobotPose(oh.get());                                
+            // Move the robot forward half the length of the robot away from the april tag (or else we'll be embeded 
+            // in the wall) The default robot length is 0.82 meters, we'll give it a little breathing room.
+            // We could probably come up with some way to provide an "official robot length", but this is just
+            // a demonstration.
+            oh.moveForward((0.82 / 2)+0.1);
+
+            // Face the april tag. April tags by default face the field. We want the robot to face the april tag.
+            oh.flip();
+
+            // Used to test mirroring poses for 2025 game (which was a full mirror, not just across the field)
+            // oh.mirrorPoseForAlliance(false);
+
+            System.out.println(aprilTagIdx+":"+OdometryHelper.AprilTagNamesForIds.values()[aprilTagIdx].name());
+            field.setRobotPose(oh.get()); 
 
             aprilTagIdx++;
             if (aprilTagIdx >= tags.size()) {
                 aprilTagIdx = 0;
-            } 
+            }
+            
         }));
         
     }
