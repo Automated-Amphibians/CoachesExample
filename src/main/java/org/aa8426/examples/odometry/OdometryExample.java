@@ -39,9 +39,24 @@ public class OdometryExample extends TimedRobot {
         
         field.setRobotPose(new Pose2d(5, 5, Rotation2d.fromDegrees(0)));
 
+        rc.driverPad.b().onTrue(Commands.runOnce(() -> {                        
+            field.setRobotPose(OdometryHelper.getCoralPosition(false, OdometryHelper.getCoralLetter(aprilTagIdx), 0.4));            
+            aprilTagIdx++;
+        }));
+
+        rc.driverPad.x().onTrue(Commands.runOnce(() -> {                        
+            field.setRobotPose(OdometryHelper.getAlgaePosition(false, OdometryHelper.getAlgaeLetter(aprilTagIdx), 0.4));            
+            aprilTagIdx++;
+        }));
+
+
         rc.driverPad.a().onTrue(Commands.runOnce(() -> {
             List<AprilTag> tags = fieldLayout.getTags();
             
+            if (aprilTagIdx >= tags.size()) {
+                aprilTagIdx = 0;
+            }
+
             AprilTag tag = tags.get(aprilTagIdx);
             
             Pose2d pose = new Pose2d(tag.pose.getX(), tag.pose.getY(), tag.pose.getRotation().toRotation2d());
@@ -59,14 +74,10 @@ public class OdometryExample extends TimedRobot {
             // Used to test mirroring poses for 2025 game (which was a full mirror, not just across the field)
             // oh.mirrorPoseForAlliance(false);
 
-            System.out.println(aprilTagIdx+":"+OdometryHelper.AprilTagNamesForIds.values()[aprilTagIdx].name());
+            System.out.println(aprilTagIdx+":"+OdometryHelper.AprilTagNamesFor2025Ids.values()[aprilTagIdx].name());
             field.setRobotPose(oh.get()); 
 
             aprilTagIdx++;
-            if (aprilTagIdx >= tags.size()) {
-                aprilTagIdx = 0;
-            }
-            
         }));
         
     }
@@ -75,4 +86,5 @@ public class OdometryExample extends TimedRobot {
     public void teleopPeriodic() {        
         
     }
+
 }

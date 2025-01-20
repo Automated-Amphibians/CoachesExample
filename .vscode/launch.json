@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "OdometryExample",
+      "request": "launch",
+      "mainClass": "org.aa8426.examples.odometry.OdometryExample",
+      "projectName": "CoachExamples"
+    },
+    {
+      "type": "java",
       "name": "OdometryHelper",
       "request": "launch",
       "mainClass": "org.aa8426.examples.odometry.OdometryHelper",

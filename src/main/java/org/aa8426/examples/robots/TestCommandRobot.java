@@ -6,18 +6,11 @@ package org.aa8426.examples.robots;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import org.aa8426.RobotContainer;
-import org.aa8426.examples.commands.CmdExampleForSlides1;
 
 public class TestCommandRobot extends TimedRobot {
-
-  private RobotContainer rc;  
-
   
-
   @Override
-  public void robotInit() {
-    rc = new RobotContainer();
+  public void robotInit() {    
   }
 
   @Override
@@ -27,9 +20,9 @@ public class TestCommandRobot extends TimedRobot {
 
   @Override
   public void testInit() {    
-    //CmdExamples.logScheduler(false);
+    // CmdExamples.logScheduler(false);
     
-    //InterruptionBehavior ib;
+    // InterruptionBehavior ib;
     
     /* 
     Runnable task = () -> {
@@ -41,16 +34,16 @@ public class TestCommandRobot extends TimedRobot {
 
     /***** EXAMPLES FOR COMMANDS *******/
 
-    //CmdExampleForSlides1.printHelloWorld(); 
+    // CmdExampleForSlides1.printHelloWorld(); 
     // CmdExampleForSlides1.printHelloWorldSimple();
     // CmdExampleForSlides1.printHelloWorldSimpleSequence();
-    //CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeating();
+    // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeating();
     // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingBad();
-    //CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingFixed();
+    // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingFixed();
 
     /***** EXAMPLES FOR TRIGGERS *******/
 
-     CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppable(rc.driverPad);
+    // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppable(rc.driverPad);
     // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppableWithStartEnd(rc.driverPad);
     // CmdExampleForSlides1.printHelloWorldSimpleSequenceRepeatingStoppableWithStartEndFixed(rc.driverPad);    
     // CmdExampleForSlides1.printHelloButUhOh(rc.driverPad);
@@ -69,8 +62,8 @@ public class TestCommandRobot extends TimedRobot {
     // CmdExamples.example5(m_controller);
     // CmdExamples.example6(m_controller);
        
-    //rc.leds.setVisionSignal(Color.kRed, false);
-    //rc.leds.setIntakeSignal(Color.kGreen, true);    
+    // rc.leds.setVisionSignal(Color.kRed, false);
+    // rc.leds.setIntakeSignal(Color.kGreen, true);    
   }
 
   @Override

@@ -3,7 +3,13 @@ package org.aa8426.lib;
 import edu.wpi.first.wpilibj.Timer;
 
 public class RobotUtils {
-    
+   
+  
+  static public void roboRioSerialNumbers() {
+    // "0318860e" (roborio 1)
+
+  }
+
   static public void logUptime(String msg) {
     System.out.println(Timer.getFPGATimestamp() + " - " + msg);
   }

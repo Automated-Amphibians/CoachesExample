@@ -1,5 +1,9 @@
 package org.aa8426.examples.odometry;
 
+
+import java.util.List;
+
+import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -14,8 +18,9 @@ public class OdometryHelper {
     
     Pose2d pose2d;
     static final AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
+    static List<AprilTag> tags = fieldLayout.getTags();
 
-    enum AprilTagNamesForIds {
+    public enum AprilTagNamesFor2025Ids {        
         RED_LEFT_FEEDER,
         RED_RIGHT_FEEDER,
         RED_PROCESSOR,
@@ -41,8 +46,108 @@ public class OdometryHelper {
     }
 
     public OdometryHelper(Pose2d pose2d) {
+        System.out.println(pose2d);
         this.pose2d = pose2d;        
-    }    
+    }
+
+    static public String getCoralLetter(int idx) {
+        idx = idx % 12;
+        return "ABCDEFGHIJKL".substring(idx, idx+1);
+    }
+
+    static public String getAlgaeLetter(int idx) {
+        idx = idx % 6;
+        return "ACEGIK".substring(idx, idx+1);
+    }
+
+    static private Pose2d transformCoral(AprilTagNamesFor2025Ids reef_tag, boolean isLeft, double robotOffset) {
+        Pose2d pose2d = getPoseFromAprilTag(reef_tag);
+        if (isLeft) {
+            return new OdometryHelper(pose2d).moveForward(robotOffset).flip().moveLeft(0.2).pose2d;
+        } else {
+            return new OdometryHelper(pose2d).moveForward(robotOffset).flip().moveRight(0.2).pose2d;
+        }
+    }
+
+    static private Pose2d transformAlgae(AprilTagNamesFor2025Ids reef_tag, double robotOffset) {
+        Pose2d pose2d = getPoseFromAprilTag(reef_tag);
+        return new OdometryHelper(pose2d).moveForward(robotOffset).flip().pose2d;        
+    }
+
+    static public Pose2d getAlgaePosition(boolean forRedAlliance, String letter, double robotOffset) {
+        if (forRedAlliance) {
+            //if (true) {
+                switch (letter.toUpperCase()) {
+                    case "A": return transformAlgae(AprilTagNamesFor2025Ids.RED_REEF_A, robotOffset);
+                    case "B": return transformAlgae(AprilTagNamesFor2025Ids.RED_REEF_A, robotOffset);
+                    case "C": return transformAlgae(AprilTagNamesFor2025Ids.RED_REEF_C, robotOffset);
+                    case "D": return transformAlgae(AprilTagNamesFor2025Ids.RED_REEF_C, robotOffset);
+                    case "E": return transformAlgae(AprilTagNamesFor2025Ids.RED_REEF_E, robotOffset);
+                    case "F": return transformAlgae(AprilTagNamesFor2025Ids.RED_REEF_E, robotOffset);
+                    case "G": return transformAlgae(AprilTagNamesFor2025Ids.RED_REEF_G, robotOffset);
+                    case "H": return transformAlgae(AprilTagNamesFor2025Ids.RED_REEF_G, robotOffset);
+                    case "I": return transformAlgae(AprilTagNamesFor2025Ids.RED_REEF_I, robotOffset);
+                    case "J": return transformAlgae(AprilTagNamesFor2025Ids.RED_REEF_I, robotOffset);
+                    case "K": return transformAlgae(AprilTagNamesFor2025Ids.RED_REEF_K, robotOffset);
+                    case "L": return transformAlgae(AprilTagNamesFor2025Ids.RED_REEF_K, robotOffset);
+                    default: return null;                
+                }
+            } else {
+                switch (letter.toUpperCase()) {
+                    case "A": return transformAlgae(AprilTagNamesFor2025Ids.BLUE_REEF_A, robotOffset);
+                    case "B": return transformAlgae(AprilTagNamesFor2025Ids.BLUE_REEF_A, robotOffset);
+                    case "C": return transformAlgae(AprilTagNamesFor2025Ids.BLUE_REEF_C, robotOffset);
+                    case "D": return transformAlgae(AprilTagNamesFor2025Ids.BLUE_REEF_C, robotOffset);
+                    case "E": return transformAlgae(AprilTagNamesFor2025Ids.BLUE_REEF_E, robotOffset);
+                    case "F": return transformAlgae(AprilTagNamesFor2025Ids.BLUE_REEF_E, robotOffset);
+                    case "G": return transformAlgae(AprilTagNamesFor2025Ids.BLUE_REEF_G, robotOffset);
+                    case "H": return transformAlgae(AprilTagNamesFor2025Ids.BLUE_REEF_G, robotOffset);
+                    case "I": return transformAlgae(AprilTagNamesFor2025Ids.BLUE_REEF_I, robotOffset);
+                    case "J": return transformAlgae(AprilTagNamesFor2025Ids.BLUE_REEF_I, robotOffset);
+                    case "K": return transformAlgae(AprilTagNamesFor2025Ids.BLUE_REEF_K, robotOffset);
+                    case "L": return transformAlgae(AprilTagNamesFor2025Ids.BLUE_REEF_K, robotOffset);
+                    default: return null;                
+                }
+            }    
+    }
+
+    static public Pose2d getCoralPosition(boolean forRedAlliance, String letter, double robotOffset) {
+        //System.out.println(letter+","+AprilTagNamesFor2025Ids.RED_REEF_A.ordinal());
+        if (forRedAlliance) {
+        //if (true) {
+            switch (letter.toUpperCase()) {
+                case "A": return transformCoral(AprilTagNamesFor2025Ids.RED_REEF_A, true, robotOffset);
+                case "B": return transformCoral(AprilTagNamesFor2025Ids.RED_REEF_A, false, robotOffset);
+                case "C": return transformCoral(AprilTagNamesFor2025Ids.RED_REEF_C, true, robotOffset);
+                case "D": return transformCoral(AprilTagNamesFor2025Ids.RED_REEF_C, false, robotOffset);
+                case "E": return transformCoral(AprilTagNamesFor2025Ids.RED_REEF_E, true, robotOffset);
+                case "F": return transformCoral(AprilTagNamesFor2025Ids.RED_REEF_E, false, robotOffset);
+                case "G": return transformCoral(AprilTagNamesFor2025Ids.RED_REEF_G, true, robotOffset);
+                case "H": return transformCoral(AprilTagNamesFor2025Ids.RED_REEF_G, false, robotOffset);
+                case "I": return transformCoral(AprilTagNamesFor2025Ids.RED_REEF_I, true, robotOffset);
+                case "J": return transformCoral(AprilTagNamesFor2025Ids.RED_REEF_I, false, robotOffset);
+                case "K": return transformCoral(AprilTagNamesFor2025Ids.RED_REEF_K, true, robotOffset);
+                case "L": return transformCoral(AprilTagNamesFor2025Ids.RED_REEF_K, false, robotOffset);
+                default: return null;                
+            }
+        } else {
+            switch (letter.toUpperCase()) {
+                case "A": return transformCoral(AprilTagNamesFor2025Ids.BLUE_REEF_A, true, robotOffset);
+                case "B": return transformCoral(AprilTagNamesFor2025Ids.BLUE_REEF_A, false, robotOffset);
+                case "C": return transformCoral(AprilTagNamesFor2025Ids.BLUE_REEF_C, true, robotOffset);
+                case "D": return transformCoral(AprilTagNamesFor2025Ids.BLUE_REEF_C, false, robotOffset);
+                case "E": return transformCoral(AprilTagNamesFor2025Ids.BLUE_REEF_E, true, robotOffset);
+                case "F": return transformCoral(AprilTagNamesFor2025Ids.BLUE_REEF_E, false, robotOffset);
+                case "G": return transformCoral(AprilTagNamesFor2025Ids.BLUE_REEF_G, true, robotOffset);
+                case "H": return transformCoral(AprilTagNamesFor2025Ids.BLUE_REEF_G, false, robotOffset);
+                case "I": return transformCoral(AprilTagNamesFor2025Ids.BLUE_REEF_I, true, robotOffset);
+                case "J": return transformCoral(AprilTagNamesFor2025Ids.BLUE_REEF_I, false, robotOffset);
+                case "K": return transformCoral(AprilTagNamesFor2025Ids.BLUE_REEF_K, true, robotOffset);
+                case "L": return transformCoral(AprilTagNamesFor2025Ids.BLUE_REEF_K, false, robotOffset);
+                default: return null;                
+            }
+        }
+    }
 
     public OdometryHelper move(double distance, Rotation2d angle) {        
         double xNew = pose2d.getX() + distance * Math.cos(angle.getRadians());
@@ -67,7 +172,7 @@ public class OdometryHelper {
         return this;
     }
 
-    public OdometryHelper moveleft(double distance) {
+    public OdometryHelper moveLeft(double distance) {
         move(distance, Rotation2d.fromDegrees(pose2d.getRotation().getDegrees()+90));
         return this;
     }
@@ -134,7 +239,21 @@ public class OdometryHelper {
         return this;
     }    
 
-    public static void main(String[] args) {
+    public static Pose2d getPoseFromAprilTag(AprilTagNamesFor2025Ids tag) {
+        return tags.get(tag.ordinal()).pose.toPose2d();
+    }
+
+    public static void main(String[] args) {        
+        //System.out.println(OdometryHelper.AprilTagNamesFor2025Ids.RED_LEFT_FEEDER.ordinal());
+        System.out.println(OdometryHelper.AprilTagNamesFor2025Ids.RED_REEF_K.ordinal());
+        System.out.println(OdometryHelper.AprilTagNamesFor2025Ids.RED_REEF_A.ordinal());
+        System.out.println(OdometryHelper.AprilTagNamesFor2025Ids.RED_REEF_C.ordinal());
+        //for(int x=0;x<30;x++) {
+        //    System.out.println(getCoralLetter(x));
+        //}
+        System.out.println(tags.get(AprilTagNamesFor2025Ids.RED_REEF_A.ordinal()));
+        //System.out.println(getCoralPosition("A"));
+
         OdometryHelper oh = new OdometryHelper(new Pose2d(0, 0, Rotation2d.fromDegrees(45)));
         oh.move(5,Rotation2d.fromDegrees(53.13));
         System.out.println(oh.get());
@@ -149,4 +268,6 @@ public class OdometryHelper {
         System.out.println(oh.get());
 
     }
+
+    
 }
