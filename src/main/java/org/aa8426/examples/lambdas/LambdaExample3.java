@@ -3,7 +3,7 @@ package org.aa8426.examples.lambdas;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
-import org.aa8426.subsystems.FakeMotor;
+import org.aa8426.lib.hardware.motors.Motor;
 
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -12,8 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
  * This is intended to show the lambda syntax.
  */
 public class LambdaExample3 {
-
-  static FakeMotor motor = new FakeMotor();
+  
   static XboxController controller = new XboxController(0);
   
   static Double simpleReturnOfFive() {
@@ -35,12 +34,13 @@ public class LambdaExample3 {
       // instance of the target type, which can then be assigned to a 
       // variable. The code block must match the method's signature 
       // (parameters and return type).
+      Motor motor = Motor.create("PLACEHOLDER", 0, 0, 0, 0);
 
       // () -> tells the compiler a code block or expression is about to 
       // follow, and that it should be used as a function. Standard rules 
       // about matching method/function signatures apply.
       Runnable startMotor = () -> {
-          motor.startMotor(50);          
+          motor.set(0.50);          
       };      
       
       // :: (colon colon) tells the compiler that you are asking for the

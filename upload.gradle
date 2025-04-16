@@ -1,0 +1,56 @@
+def _artifactId = 'aa-test-lib'
+def _group = 'aa8426'
+def versionFile = file('version.txt')
+def currentVersion = versionFile.text.trim()
+
+task bumpVersion {
+    doLast {
+        def parts = currentVersion.tokenize('.').collect { it.toInteger() }
+        parts[-1] += 1 // bump patch version
+        def newVersion = parts.join('.')
+        versionFile.text = newVersion
+        println "Version bumped to ${newVersion}"
+    }
+}
+
+//tasks.named("publishToMavenLocal") {
+//    dependsOn bumpVersion
+//}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = _artifactId
+            group = _group
+            version = currentVersion
+            from components.java
+        }
+    }
+}
+
+tasks.register('whereIsIt') {
+    doLast {
+        def groupPath = project.group.replace('.', '/')
+        def artifactId = _artifactId // or project.name
+        def version = currentVersion
+        def path = "${System.getProperty('user.home')}/.m2/repository/${groupPath}/${artifactId}/${version}"
+        println "Published to: ${path}"
+    }
+}
+
+def localRepo = "${System.getProperty('user.home')}/.m2/repository"
+def localArtifactDir = "${localRepo}/${_group}/${_artifactId}/${currentVersion}"
+
+def remoteUser = 'family'
+def remoteHost = 'bdf7141eaea427a827b78604e451e0e36.asuscomm.com'
+def remoteDir = '/home/family/git/cgp-misc/home-login/repo/' + _group + '/' + _artifactId + '/' + currentVersion
+
+task uploadToRepo(type: Exec) {
+    dependsOn publishToMavenLocal
+    doFirst {
+        println "Uploading from: ${localArtifactDir} to ${remoteUser}@${remoteHost}:${remoteDir}"
+    }
+
+    // Create remote dir before uploading
+    commandLine 'cmd', '/c', "ssh ${remoteUser}@${remoteHost} \"mkdir -p ${remoteDir}\" && scp ${localArtifactDir}\\* ${remoteUser}@${remoteHost}:${remoteDir}\\"
+}

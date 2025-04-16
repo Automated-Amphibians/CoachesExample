@@ -1,7 +1,9 @@
 package org.aa8426.subsystems;
 
-import org.aa8426.examples.leds.LedDisplay;
-import org.aa8426.examples.leds.LedSegment;
+
+
+import org.aa8426.lib.hardware.leds.LedDisplay;
+import org.aa8426.lib.hardware.leds.LedSegment;
 
 import edu.wpi.first.wpilibj.util.Color;
 

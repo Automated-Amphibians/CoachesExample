@@ -4,7 +4,6 @@
 
 package org.aa8426;
 
-import org.aa8426.lib.RobotUtils;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 public class Robot extends TimedRobot {  
@@ -25,54 +24,42 @@ public class Robot extends TimedRobot {
      * Why isn't this done in the constructor (hint: is the underlying robot hardware ready)
      */
     rc = new RobotContainer();    
-    RobotUtils.logUptime("ROBOT INIT");
   }
 
   @Override
   public void robotPeriodic() {
-    RobotUtils.logUptime("ROBOT PERIODIC"); // try setting a breakpoint here
   }
 
   @Override
   public void disabledInit() {
-    RobotUtils.logUptime("DISABLED INIT");
   }
 
   @Override
   public void disabledPeriodic() {
-    RobotUtils.logUptime("DISABLED PERIODIC");
   }
 
   @Override
   public void disabledExit() { 
-    RobotUtils.logUptime("DISABLED EXIT");
   }
 
   @Override
   public void autonomousInit() {
-    RobotUtils.logUptime("AUTONOMOUS INIT");
   }
 
   @Override
   public void autonomousPeriodic() {
-    RobotUtils.logUptime("AUTONOMOUS PERIODIC");
   }
 
   @Override
   public void autonomousExit() {
-    RobotUtils.logUptime("AUTONOMOUS EXIT");
   }
 
   @Override
-  public void teleopInit() {
-    RobotUtils.logUptime("TELEOP INIT");
+  public void teleopInit() {  
   }
 
   @Override
-  public void teleopPeriodic() {
-    RobotUtils.logUptime("TELEOP PERIODIC");    
-    RobotUtils.logMatchtime(" matchtime");
-    RobotUtils.logMatchtime("count = " + count);
+  public void teleopPeriodic() {    
     count = count + 1;
     if (count > 20) {
       Thread.dumpStack();      
@@ -81,8 +68,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopExit() {
-    RobotUtils.logUptime("TELEOP EXIT");
+  public void teleopExit() {    
   }
 
   @Override

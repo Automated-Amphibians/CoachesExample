@@ -1,4 +1,4 @@
-package org.aa8426.examples.leds;
+package org.aa8426.lib.hardware.leds;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
@@ -15,10 +15,7 @@ public class LedDisplay {
         this.size = size;
 
         m_led = new AddressableLED(port);        
-        
-        // Reuse buffer
-        // Default to a length of 60, start empty output
-        // Length is expensive to set, so only set it once, then just update data
+                                
         m_ledBuffer = new AddressableLEDBuffer(size);
         m_led.setLength(m_ledBuffer.getLength());
     

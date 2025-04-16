@@ -3,7 +3,7 @@ package org.aa8426.examples.lambdas;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
-import org.aa8426.subsystems.FakeMotor;
+import org.aa8426.lib.hardware.motors.Motor;
 
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -29,12 +29,12 @@ public class LambdaExample2 {
         return x + y;
       };
 
-      FakeMotor motor = new FakeMotor();
+      Motor motor = Motor.create("PLACEHOLDER", 0, 0, 0, 0);
       XboxController controller = new XboxController(0);
 
       // Common types for wpilib commands      
       Runnable startMotor = () -> {
-          motor.startMotor(50);
+          motor.set(0.5);
           System.out.println("World ");
       };
       

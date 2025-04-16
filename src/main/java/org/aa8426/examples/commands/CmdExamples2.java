@@ -70,8 +70,11 @@ public class CmdExamples2 {
      * 
      */
     public static void example3(CommandXboxController ctrl) {
+        // ctrl.rightBumper()
+        // .toggleOnTrue(Commands.runEnd(out("Toggled to running"), out("Toggled to stopped")))   
+        // ;
         ctrl.rightBumper()
-        .toggleOnTrue(Commands.runEnd(out("Toggled to running"), out("Toggled to stopped")))   
+        .toggleOnTrue(Commands.startEnd(() -> {System.out.println("Toggled to running");}, out("Toggled to stopped")))   
         ;
     }    
 
