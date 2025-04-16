@@ -1,26 +1,27 @@
-package frc.aa8426.utils.vision;
+package org.aa8426.lib.vision;
 
 import java.util.function.Supplier;
+
+import org.aa8426.lib.Odometry.VisionMeasurement;
+import org.aa8426.lib.dashboard.SendableFluent;
+import org.aa8426.lib.dashboard.SendableFluent.ISendableFluent;
+import org.aa8426.lib.vision.LimelightHelpers.RawFiducial;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Timer;
-import frc.aa8426.subsystems.SwerveSubsystem;
-import frc.aa8426.utils.Odometry.VisionMeasurement;
-import frc.aa8426.utils.dashboard.SendableFluent;
-import frc.aa8426.utils.dashboard.SendableFluent.ISendableFluent;
-import frc.aa8426.utils.vision.LimelightHelpers.RawFiducial;
+import swervelib.SwerveDrive;
 
-public class LimelightCamera implements ISendableFluent{
+public class LimelightCamera implements ISendableFluent {
 
-    private SwerveSubsystem swerveSubsystem;
+    private SwerveDrive swerveDrive;
     private String limelightName;
     private VisionSingleTargetInfo singleTargetInfo = new VisionSingleTargetInfo();
     
-    public LimelightCamera(String limelightName, SwerveSubsystem swerveSubsystem) {
-        this.swerveSubsystem = swerveSubsystem;
+    public LimelightCamera(String limelightName, SwerveDrive swerveDrive) {
+        this.swerveDrive = swerveDrive;
         this.limelightName = limelightName;
         addSendables(SendableFluent.getInstance());
     }
@@ -57,20 +58,20 @@ public class LimelightCamera implements ISendableFluent{
         // } else {
         //     poseSet = new Pose2d(pose.getX(), pose.getY(), swerveSubsystem.getHeading());
         // }
-        swerveSubsystem.swerveDrive.addVisionMeasurement(singleTargetInfo.lastEstGlobalPose.toPose2d(), singleTargetInfo.bestTargetAge,
+        swerveDrive.addVisionMeasurement(singleTargetInfo.lastEstGlobalPose.toPose2d(), singleTargetInfo.bestTargetAge,
                 VecBuilder.fill(.7, .7, Rotation2d.fromDegrees(0).getRadians()));
     }
 
     public void updateWithMegaTag2AndWPIBlue() {
-
-        LimelightHelpers.SetRobotOrientation(limelightName, swerveSubsystem.getHeading().getRadians() + Math.PI, 0, 0, 0, 0, 0);
+        
+        LimelightHelpers.SetRobotOrientation(limelightName, swerveDrive.getPose().getRotation().getRadians() + Math.PI, 0, 0, 0, 0, 0);
         LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
                 
         if (mt2 == null) {
             singleTargetInfo.ageOutResults("mt2 was null");
             return; // "reject update"
         }
-        if (Math.abs(swerveSubsystem.swerveDrive.getGyro().getYawAngularVelocity().baseUnitMagnitude()) > 720) {
+        if (Math.abs(swerveDrive.getGyro().getYawAngularVelocity().baseUnitMagnitude()) > 720) {
             singleTargetInfo.ageOutResults("ang vel");
             return; // "reject update"
         }

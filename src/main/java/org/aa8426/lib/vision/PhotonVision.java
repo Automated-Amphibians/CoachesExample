@@ -1,14 +1,13 @@
-package frc.aa8426.utils.vision;
+package org.aa8426.lib.vision;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.util.Color;
-import frc.aa8426.Robot;
-import frc.aa8426.RobotContainer;
 
 import java.awt.Desktop;
 import java.util.ArrayList;
@@ -49,8 +48,7 @@ public class PhotonVision {
    * Field from {@link swervelib.SwerveDrive#field}
    */
   private Field2d field2d;
-
-  private RobotContainer rc;
+  
 
   /**
    * Constructor for the Vision class.
@@ -59,13 +57,11 @@ public class PhotonVision {
    *                    {@link SwerveDrive#getPose()}
    * @param field       Current field, should be {@link SwerveDrive#field}
    */
-  public PhotonVision(Supplier<Pose2d> currentPose, Field2d field, RobotContainer rc) {
+  public PhotonVision(Supplier<Pose2d> currentPose, Field2d field) {
     this.currentPose = currentPose;
     this.field2d = field;
-    this.rc = rc;
-
     
-    if (Robot.isSimulation()) {
+    if (RobotBase.isSimulation()) {
       visionSim = new VisionSystemSim("Vision");
       visionSim.addAprilTags(fieldLayout);
 
@@ -133,7 +129,7 @@ public class PhotonVision {
     if (x >= statusColors.length) {
       x = statusColors.length - 1;
     }
-    rc.leds.setColor(statusColors[x]);
+    //rc.leds.setColor(statusColors[x]);
   }
 
   public Optional<Pose2d> getPoseEstimation(SwerveDrive swerveDrive) {
@@ -175,7 +171,7 @@ public class PhotonVision {
     //Optional<EstimatedRobotPose> poseEst = camera.getEstimatedGlobalPose();
     Optional<EstimatedRobotPose> poseEst = camera.getEstimatedGlobalPoseSimplified();
     //System.out.println("Checking camera:"+camera.name());           
-    if (Robot.isSimulation()) {
+    if (RobotBase.isSimulation()) {
       Field2d debugField = visionSim.getDebugField();
       // Uncomment to enable outputting of vision targets in sim.
       poseEst.ifPresentOrElse(

@@ -1,11 +1,12 @@
-package frc.aa8426.utils.vision;
+package org.aa8426.lib.vision;
+
+import org.aa8426.lib.dashboard.SendableFluent;
+import org.aa8426.lib.dashboard.SendableFluent.ISendableFluent;
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
-import frc.aa8426.utils.dashboard.SendableFluent;
-import frc.aa8426.utils.dashboard.SendableFluent.ISendableFluent;
 
 public class VisionSingleTargetInfo implements ISendableFluent {
     public int bestTargetFidId;

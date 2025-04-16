@@ -1,9 +1,12 @@
-package frc.aa8426.utils.vision;
+package org.aa8426.lib.vision;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.aa8426.Robot;
+import org.aa8426.lib.dashboard.SendableFluent;
+import org.aa8426.lib.dashboard.SendableFluent.ISendableFluent;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
@@ -26,9 +29,7 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
-import frc.aa8426.Robot;
-import frc.aa8426.utils.dashboard.SendableFluent;
-import frc.aa8426.utils.dashboard.SendableFluent.ISendableFluent;
+
 
 /**
  * This class was once part of Vision.java, but was removed to emphasize that this is the the
