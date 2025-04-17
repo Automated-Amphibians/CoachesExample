@@ -13,9 +13,23 @@ task bumpVersion {
     }
 }
 
+sourceSets {
+    custom {
+        java {
+            srcDir 'org/aa8426/lib'
+        }
+    }
+}
+
 //tasks.named("publishToMavenLocal") {
 //    dependsOn bumpVersion
 //}
+task customJar(type: Jar) {
+    archiveBaseName.set("aa-test-lib")
+    archiveClassifier.set("") // no classifier, this is the main artifact
+    archiveVersion.set(version)
+    from sourceSets.custom.output
+}
 
 publishing {
     publications {
@@ -23,7 +37,10 @@ publishing {
             artifactId = _artifactId
             group = _group
             version = currentVersion
-            from components.java
+            
+            //from components.java
+
+            artifact customJar
         }
     }
 }
@@ -51,6 +68,17 @@ task uploadToRepo(type: Exec) {
         println "Uploading from: ${localArtifactDir} to ${remoteUser}@${remoteHost}:${remoteDir}"
     }
 
+    def checkCmd = ["ssh", "${remoteUser}@${remoteHost}", "test -d '${remoteDir}'"]
+    def checkResult = new ByteArrayOutputStream()
+    def result = project.exec {
+        commandLine = checkCmd
+        ignoreExitValue = true 
+    }.exitValue
+
+    if (result == 0) {
+        throw new GradleException("** REMOVE VERSION ALREADY EXISTS AT: *** \n       ${remoteDir}. \n\n   Upload aborted. \n\n --> Run gradlew 'bumpVersion' task.")
+    }
+    
     // Create remote dir before uploading
     commandLine 'cmd', '/c', "ssh ${remoteUser}@${remoteHost} \"mkdir -p ${remoteDir}\" && scp ${localArtifactDir}\\* ${remoteUser}@${remoteHost}:${remoteDir}\\"
 }
