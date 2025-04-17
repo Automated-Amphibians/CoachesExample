@@ -1,4 +1,5 @@
-package org.aa8426.lib.Odometry;
+package org.aa8426.lib.odometry;
+
 import org.aa8426.lib.PIDControl;
 
 import edu.wpi.first.math.MathUtil;

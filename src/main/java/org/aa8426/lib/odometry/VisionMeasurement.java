@@ -1,6 +1,4 @@
-package org.aa8426.lib.Odometry;
-
-
+package org.aa8426.lib.odometry;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;

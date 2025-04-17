@@ -1,6 +1,6 @@
-package org.aa8426.lib.Odometry;
+package org.aa8426.lib.odometry;
 
-import org.aa8426.lib.Odometry.Reefscape.AprilTagNames;
+import org.aa8426.lib.odometry.Reefscape.AprilTagNames;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;

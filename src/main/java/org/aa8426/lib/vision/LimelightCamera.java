@@ -2,7 +2,7 @@ package org.aa8426.lib.vision;
 
 import java.util.function.Supplier;
 
-import org.aa8426.lib.Odometry.VisionMeasurement;
+import org.aa8426.lib.odometry.VisionMeasurement;
 import org.aa8426.lib.dashboard.SendableFluent;
 import org.aa8426.lib.dashboard.SendableFluent.ISendableFluent;
 import org.aa8426.lib.vision.LimelightHelpers.RawFiducial;

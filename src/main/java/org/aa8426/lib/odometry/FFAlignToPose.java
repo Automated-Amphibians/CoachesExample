@@ -1,4 +1,4 @@
-package org.aa8426.lib.Odometry;
+package org.aa8426.lib.odometry;
 
 import java.util.function.Supplier;
 
@@ -47,7 +47,7 @@ public class FFAlignToPose extends Command {
     private double thetaErrorAbs = 0.0;        
     private double maxSpeed;
 
-    public FFAlignToPose(DrivingInputs drivingInputs, SwerveDrive swerDrive, Supplier<Pose2d> robotPoseSupplier, Supplier<Pose2d> target, double maxSpeed) {        
+    public FFAlignToPose(DrivingInputs drivingInputs, SwerveDrive swerveDrive, Supplier<Pose2d> robotPoseSupplier, Supplier<Pose2d> target, double maxSpeed) {        
         this.swerveDrive = swerveDrive;
         this.drivingInputs = drivingInputs;
         this.maxSpeed = maxSpeed; // cause the constraint is being difficult

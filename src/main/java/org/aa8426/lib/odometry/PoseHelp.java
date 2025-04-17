@@ -1,4 +1,4 @@
-package org.aa8426.lib.Odometry;
+package org.aa8426.lib.odometry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.aa8426.lib.Utils;
-import org.aa8426.lib.Odometry.Reefscape.AprilTagNames;
+import org.aa8426.lib.odometry.Reefscape.AprilTagNames;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;

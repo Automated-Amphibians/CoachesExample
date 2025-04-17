@@ -1,4 +1,4 @@
-package org.aa8426.lib.Odometry;
+package org.aa8426.lib.odometry;
 
 import java.util.List;
 
