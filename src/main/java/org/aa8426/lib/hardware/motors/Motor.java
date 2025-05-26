@@ -56,7 +56,7 @@ public abstract class Motor implements ISendableFluent {
             this.matches = matches;
         }
 
-        public MotorTypeName fromValue(String motorTypeAsString) {
+        static public MotorTypeName fromValue(String motorTypeAsString) {
             if (motorTypeAsString == null) {
                 return UNKNOWN;
             }
@@ -94,7 +94,7 @@ public abstract class Motor implements ISendableFluent {
     }
 
     public static Motor create(String type, int id, int stallLimit, int freeLimit, int countsPerRev) {
-        return create(MotorTypeName.valueOf(type), id, stallLimit, freeLimit, countsPerRev);        
+        return create(MotorTypeName.fromValue(type), id, stallLimit, freeLimit, countsPerRev);        
     }
 
     abstract public void set(double power);
@@ -195,13 +195,7 @@ public abstract class Motor implements ISendableFluent {
                     new TimedBooleanSupplier(() -> !isMotorMoving(stallVelocity), secondsUntilConsideredStalled)
                             .addImmediateEnd(orCond);
         return setPowerUntilCmd(power, tbs, requirements);
-    }
-
-    public Command holdPowerMotor(double power, Subsystem... requirements) {
-        return Commands.run(() -> {
-            set(power);
-        }, requirements).withTimeout(0.1).repeatedly();
-    }
+    }    
 
     public Command resetPositionCmd() {
         return Commands.runOnce(() -> {

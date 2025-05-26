@@ -37,10 +37,11 @@ public class PIDControl implements ISendableFluent {
      * are incapable of tweaking beyond 1%, so 0.01 is a solid value for this field, presuming
      * your output is from 0-1.
      */
-    private Double dupeOutputTolerance = 0.005;
+    private Double dupeOutputTolerance = null;
     private DoubleSupplier measurementSupplier;
     private Consumer<Double> outputConsumer;
     private double lastMeasurement = 0.0;
+    private boolean disabled = false;
     
     public PIDControl(double kP, double kI, double kD, double minTarget, double maxTarget) {
         this.pid = new PIDController(kP, kI, kD/* , period */);   
@@ -97,8 +98,12 @@ public class PIDControl implements ISendableFluent {
             target = minTarget;
             //return this;
         }
-        this.pid.setSetpoint(target);
+        this.pid.setSetpoint(target);        
         return this;
+    }
+
+    public void clearTarget() {
+        this.disabled = true;        
     }
 
     public double getTolerance() {
@@ -116,7 +121,10 @@ public class PIDControl implements ISendableFluent {
         return this;
     }
 
-    public double calc(double measurement) {        
+    public Double calc(double measurement) {        
+        if (disabled) {
+            return null;
+        }
         double output = pid.calculate(measurement);                
         // if (this.pid.atSetpoint()) {
         //     return 0.0; // or should this be a minimum?
@@ -136,9 +144,16 @@ public class PIDControl implements ISendableFluent {
         return pid.atSetpoint();
     }
 
-    public void periodic() {
+    public double calcPower() {
         lastMeasurement = measurementSupplier.getAsDouble();
-        double power = calc(lastMeasurement);
+        return calc(lastMeasurement);
+    }
+
+    public void periodic() {
+        if (disabled) {
+            return;
+        }
+        double power = calcPower();
         if (dupeOutputTolerance == null || RobotBase.isSimulation()) {
             lastPower = power;
             outputConsumer.accept(power);
@@ -174,6 +189,8 @@ public class PIDControl implements ISendableFluent {
             s.addDouble("target", this::getTarget, this::setTarget);
             s.addDouble("tolerance", this::getTolerance, this::setTolerance);
             s.addDouble("lastMeasure", () -> lastMeasurement, null);
+            s.addDouble("calcPower", () -> calcPower(), null);
+            s.addBoolean("enabled", () -> !disabled, null);
             //s.addDouble("maxRampUp", this::getMaxRampUp, this::setMaxRampUp);
             //s.addDouble("dupePowerTolerance", this::getDupeOutputTolerance, this::setDupeOutputTolerance);        
         }

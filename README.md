@@ -13,3 +13,5 @@ This readme should be littered with comments pointing to various other documenta
 * Selecting an auton
 * Running an auton (mixed actions)
 * Command examples
+
+gradlew uploadToRepo

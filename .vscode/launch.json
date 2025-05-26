@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "RevAbsoluteEncoder",
+      "request": "launch",
+      "mainClass": "org.aa8426.lib.hardware.RevAbsoluteEncoder",
+      "projectName": "CoachExamples"
+    },
+    {
+      "type": "java",
       "name": "OdometryExample",
       "request": "launch",
       "mainClass": "org.aa8426.examples.odometry.OdometryExample",

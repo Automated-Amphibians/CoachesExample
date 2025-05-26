@@ -4,19 +4,17 @@ import org.aa8426.RobotContainer;
 import org.aa8426.lib.dashboard.SendableFluent;
 import org.aa8426.lib.dashboard.SendableFluent.ISendableFluent;
 import org.aa8426.lib.hardware.motors.Motor;
+import org.aa8426.lib.hardware.motors.Motor.MotorTypeName;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 
-public class MotorTestRobot extends TimedRobot implements ISendableFluent { 
+public class MotorTestRobotSrl extends TimedRobot implements ISendableFluent { 
 
-    Motor motor = Motor.create("NEO", 2, 40, 40, 1);
-    double allowedAccelOfAccel = 0.05; // constant
-    double allowedAccel = 0.1; // 
-    //double 
+    Motor motor = Motor.create(MotorTypeName.TALON_KRAKEN, 1, 40, 40, 7);
+    SlewRateLimiter slr = new SlewRateLimiter(0.1, -0.1, 0);
     double powerGoal = 0;
     RobotContainer rc;
 
@@ -42,12 +40,12 @@ public class MotorTestRobot extends TimedRobot implements ISendableFluent {
         CommandScheduler.getInstance().getDefaultButtonLoop().clear();
         rc.driverPad.x().onTrue(Commands.runOnce(() -> {
             System.out.println("Turned on...");
-            powerGoal = 1;
+            powerGoal = 0.1;
         }));
         rc.driverPad.b().onTrue(Commands.runOnce(() -> {
             //motor.set(0.015);
             System.out.println("Turned on...");
-            powerGoal = -1;
+            powerGoal = -0.1;
         }));
         rc.driverPad.a().onTrue(Commands.runOnce(() -> {
             System.out.println("Turned off...");
@@ -60,7 +58,7 @@ public class MotorTestRobot extends TimedRobot implements ISendableFluent {
 
     @Override
     public void testPeriodic() {
-        double actualPower = 0.0;//slr.calculate(powerGoal);        
+        double actualPower = slr.calculate(powerGoal);        
         System.out.println(actualPower);
         motor.set(actualPower);
     }

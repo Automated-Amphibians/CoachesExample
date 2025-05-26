@@ -38,9 +38,9 @@ publishing {
             group = _group
             version = currentVersion
             
-            //from components.java
+            from components.java
 
-            artifact customJar
+            //artifact customJar
         }
     }
 }
@@ -62,15 +62,15 @@ def remoteUser = 'family'
 def remoteHost = 'bdf7141eaea427a827b78604e451e0e36.asuscomm.com'
 def remoteDir = '/home/family/git/cgp-misc/home-login/repo/' + _group + '/' + _artifactId + '/' + currentVersion
 
-task uploadToRepo(type: Exec) {
+tasks.register('uploadToRepo') {
     dependsOn publishToMavenLocal
-    doFirst {
+    doLast {
         println "Uploading from: ${localArtifactDir} to ${remoteUser}@${remoteHost}:${remoteDir}"
-    }
+    
 
     def checkCmd = ["ssh", "${remoteUser}@${remoteHost}", "test -d '${remoteDir}'"]
     def checkResult = new ByteArrayOutputStream()
-    def result = project.exec {
+    def result = exec {
         commandLine = checkCmd
         ignoreExitValue = true 
     }.exitValue
@@ -80,5 +80,8 @@ task uploadToRepo(type: Exec) {
     }
     
     // Create remote dir before uploading
-    commandLine 'cmd', '/c', "ssh ${remoteUser}@${remoteHost} \"mkdir -p ${remoteDir}\" && scp ${localArtifactDir}\\* ${remoteUser}@${remoteHost}:${remoteDir}\\"
+    exec {
+        commandLine 'cmd', '/c', "ssh ${remoteUser}@${remoteHost} \"mkdir -p ${remoteDir}\" && scp ${localArtifactDir}\\* ${remoteUser}@${remoteHost}:${remoteDir}\\"
+    }
+    }
 }

@@ -5,7 +5,6 @@
 package org.aa8426.examples.robots;
 
 import org.aa8426.RobotContainer;
-import org.aa8426.examples.commands.CmdExamples;
 import org.aa8426.examples.commands.CmdExamples2;
 
 import edu.wpi.first.wpilibj.TimedRobot;

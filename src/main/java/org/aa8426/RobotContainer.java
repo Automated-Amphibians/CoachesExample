@@ -4,8 +4,13 @@
 
 package org.aa8426;
 
+import org.aa8426.lib.dashboard.SendableFluent;
+import org.aa8426.lib.odometry.PoseHelp;
+import org.aa8426.lib.odometry.PoseHelp.FieldMirroring;
 import org.aa8426.subsystems.LedSubsystem;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -15,6 +20,8 @@ public class RobotContainer {
   public CommandXboxController driverPad = new CommandXboxController(0);  
  
   public RobotContainer() {
+    PoseHelp.setFieldLayout(AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeAndyMark), FieldMirroring.FULL); 
+    SendableFluent.getInstance().get("TESTROBOT");   
     configureBindings();
   }
 

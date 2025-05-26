@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.aa8426.lib.Utils;
-import org.aa8426.lib.odometry.Reefscape.AprilTagNames;
 
+import edu.wpi.first.apriltag.AprilTag;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -23,11 +24,46 @@ public class PoseHelp {
     Pose2d pose2d;
     List<Pose2d> poses = new ArrayList<>();
     Map<String, Pose2d> poseMap = new HashMap<>();
-    String defaultMapKey = null;    
+    String defaultMapKey = null;
+
+    public enum FieldMirroring {
+        FULL,
+        LENGTH
+    }
+    public static AprilTagFieldLayout fieldLayoutQ = null;
+    public static List<AprilTag> tagsQ = null;
+    public static FieldMirroring mirroring = FieldMirroring.FULL;
     
     public PoseHelp() {
         this.startingPose = new Pose2d();
         this.pose2d = this.startingPose;
+    }
+
+    public static AprilTagFieldLayout getFieldLayout() {
+        if (fieldLayoutQ == null) {
+            throw new RuntimeException("Set tags before calling getTags. (Usually early in RobotContainer)");
+        }
+        return fieldLayoutQ;
+    }
+
+    public static List<AprilTag> getTags() {
+        if (tagsQ == null) {
+            throw new RuntimeException("Set tags before calling getTags. (Usually early in RobotContainer)");
+        }
+        return tagsQ;
+    }
+
+    public static AprilTag getTag(int id) {
+        if (tagsQ == null) {
+            throw new RuntimeException("Set tags before calling getTags. (Usually early in RobotContainer)");
+        }        
+        return tagsQ.get(id);
+    }
+
+    public static void setFieldLayout(AprilTagFieldLayout _fieldLayout, FieldMirroring _mirroring) {
+        fieldLayoutQ = _fieldLayout;
+        tagsQ = fieldLayoutQ.getTags();
+        mirroring = _mirroring;
     }
 
     public PoseHelp(Pose2d pose2d) {
@@ -207,7 +243,7 @@ public class PoseHelp {
     }
 
     static public boolean isOnRedSide(Pose2d givenPose) {
-        return (givenPose.getX() > (Reefscape.fieldLayout.getFieldLength() / 2));
+        return (givenPose.getX() > (getFieldLayout().getFieldLength() / 2));
     }
 
     static public boolean isOnBlueSide(Pose2d givenPose) {
@@ -215,7 +251,7 @@ public class PoseHelp {
     }    
 
     static public boolean isOnTopHalf(Pose2d givenPose) {
-        return givenPose.getY() > (Reefscape.fieldLayout.getFieldWidth() / 2);
+        return givenPose.getY() > (getFieldLayout().getFieldWidth() / 2);
     }
 
     static public boolean isOnBottomHalf(Pose2d givenPose) {
@@ -227,24 +263,26 @@ public class PoseHelp {
         Rotation2d rot;
         //boolean mirrorOnlyLength = false;
         if (isOnRedSide(givenPose)) {
-            x = Math.abs(givenPose.getX() - Reefscape.fieldLayout.getFieldLength());
+            x = Math.abs(givenPose.getX() - getFieldLayout().getFieldLength());
         } else {
-            x = Reefscape.fieldLayout.getFieldLength() - givenPose.getX();
+            x = getFieldLayout().getFieldLength() - givenPose.getX();
         }        
         if (isOnTopHalf(givenPose)) {
-            y = Math.abs(givenPose.getY() - Reefscape.fieldLayout.getFieldWidth());
+            y = Math.abs(givenPose.getY() - getFieldLayout().getFieldWidth());
         } else {
-            y = Reefscape.fieldLayout.getFieldWidth() - givenPose.getY();
+            y = getFieldLayout().getFieldWidth() - givenPose.getY();
         }
-        /*if (mirrorOnlyLength) {
-            if (this.pose2d.getRotation().getDegrees() < 180) {
-                rot = Rotation2d.fromDegrees(180 - this.pose2d.getRotation().getDegrees());
-            } else {
-                rot = Rotation2d.fromDegrees((360 - this.pose2d.getRotation().getDegrees()) + 180);            
-            }  
-        } else {*/
+        if (FieldMirroring.FULL.equals(mirroring)) {
             rot = Rotation2d.fromDegrees(givenPose.getRotation().getDegrees()+180);
-        //}
+        } else if (FieldMirroring.LENGTH.equals(mirroring)) {
+            if (givenPose.getRotation().getDegrees() < 180) {
+                rot = Rotation2d.fromDegrees(180 - givenPose.getRotation().getDegrees());
+            } else {
+                rot = Rotation2d.fromDegrees((360 - givenPose.getRotation().getDegrees()) + 180);            
+            }  
+        }  else {
+            rot = givenPose.getRotation(); 
+        }      
         return new Pose2d(x, y, rot);
     }
     
@@ -253,8 +291,8 @@ public class PoseHelp {
         return this;
     }        
 
-    public static Pose2d getFacingAprilTag(AprilTagNames tag, double robotOffset) {
-        Pose2d pose2d = Reefscape.tags.get(tag.ordinal()).pose.toPose2d();
+    public static Pose2d getFacingAprilTag(int aprilTagId, double robotOffset) {
+        Pose2d pose2d = getTag(aprilTagId).pose.toPose2d();
         PoseHelp oh = new PoseHelp(pose2d);
         oh.moveForward(robotOffset).flip();
         return oh.pose2d;
@@ -264,14 +302,14 @@ public class PoseHelp {
         return pose2d.getTranslation().getDistance(toPose.getTranslation());
     }
 
-    static public double getDistance(Pose2d fromPose, AprilTagNames id) {
+    static public double getDistance(Pose2d fromPose, int aprilTagId) {
         return fromPose.getTranslation().getDistance(
-            Reefscape.tags.get(id.ordinal()).pose.toPose2d().getTranslation()
+            getTag(aprilTagId).pose.toPose2d().getTranslation()
         );
     }
 
-    public double getDistanceToAprilTag(AprilTagNames id) {
-        return getDistance(Reefscape.tags.get(id.ordinal()).pose.toPose2d());
+    public double getDistanceToAprilTag(int aprilTagId) {
+        return getDistance(getTag(aprilTagId).pose.toPose2d());
     }
 
    

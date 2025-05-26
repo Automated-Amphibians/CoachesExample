@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.aa8426.lib.odometry.Reefscape;
+import org.aa8426.lib.odometry.PoseHelp;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
@@ -65,7 +65,7 @@ public class VisionSubsystem  {
 
     private void addCamera(String name, String niceName, Transform3d cameraLoc) {
         PhotonCamera camera = new PhotonCamera(name);        
-        PhotonPoseEstimator poseEst = new PhotonPoseEstimator(Reefscape.fieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraLoc); 
+        PhotonPoseEstimator poseEst = new PhotonPoseEstimator(PoseHelp.getFieldLayout(), PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraLoc); 
         //PoseStrategy.LOWEST_AMBIGUITY
         // backCamTrigger.onFalse(Commands.runOnce(() -> {
         //     Elastic.sendNotification(
