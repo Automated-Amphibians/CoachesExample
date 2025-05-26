@@ -5,8 +5,6 @@ import org.aa8426.lib.dashboard.SendableFluent;
 import org.aa8426.lib.dashboard.SendableFluent.ISendableFluent;
 import org.aa8426.lib.hardware.motors.Motor;
 
-import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
