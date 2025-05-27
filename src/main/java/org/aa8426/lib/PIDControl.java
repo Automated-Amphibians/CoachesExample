@@ -97,8 +97,22 @@ public class PIDControl implements ISendableFluent {
             target = minTarget;
             //return this;
         }
+        System.out.println("target="+target);
         this.pid.setSetpoint(target);        
         return this;
+    }
+
+    public PIDControl incrementTarget(double amountToIncrement) {
+        double newTarget = this.pid.getSetpoint() + amountToIncrement;
+        if (pid.isContinuousInputEnabled()) {
+            while (newTarget > maxTarget) {
+                newTarget = newTarget - maxTarget;
+            }
+            while (newTarget < minTarget) {
+                newTarget = newTarget + maxTarget;
+            }
+        }        
+        return this.setTarget(newTarget);        
     }
 
     public double getTolerance() {
@@ -120,12 +134,13 @@ public class PIDControl implements ISendableFluent {
         double output = pid.calculate(measurement);                
         // if (this.pid.atSetpoint()) {
         //     return 0.0; // or should this be a minimum?
-        // }        
-        output = output < 0 ? -MathUtil.clamp(-output, min, max) : MathUtil.clamp(output, min, max);
+        // }
         
+        double newOutput = output < 0 ? MathUtil.clamp(output, -max, -min) : MathUtil.clamp(output, min, max);
+        //System.out.println(String.format("output=%.2f, newOutput=%.2f", output, newOutput));
         //output = MathUtil.clamp(output, min, max);
         //log.log("measurement="+measurement+",error="+this.pid.getPositionError()+",target="+this.pid.getSetpoint()+",output="+output+",atsetpoint="+this.pid.atSetpoint());
-        return output;
+        return newOutput;
     }    
 
     public double getLastPower() {

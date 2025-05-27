@@ -8,6 +8,7 @@ import org.aa8426.lib.hardware.motors.Motor;
 import org.aa8426.lib.hardware.motors.Motor.MotorTypeName;
 import org.aa8426.subsystems.GenericMechanism;
 
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -41,46 +42,58 @@ public class GenericMechanismTest extends TimedRobot {
          * Ordinarily we bind commands in RobotContainer or OperatorInterface/DriverInterface (user interface),
          * but if we do that, then we need too many files for an example.
          */
-        Command addPower = Commands.runOnce(() -> {
-            System.out.println("+");
-            //gmt.getPID().setTarget(gmt.getPID().getTarget()+0.1);
-            gmt.manualPower = gmt.manualPower == null ? 0.125 : gmt.manualPower + 0.01;
+        Command addPower = Commands.runOnce(() -> {            
+            double newPower = gmt.addToManualPower(0.01);
+            System.out.println("+ newPower="+newPower);
         });
 
         Command lowerPower = Commands.runOnce(() -> {
-            //motor.set(0.015);
-            System.out.println("-");
-            gmt.manualPower = gmt.manualPower == null ? -0.125 : gmt.manualPower - 0.01;
-            //gmt.getPID().setTarget(gmt.getPID().getTarget()-0.1);
+            double newPower = gmt.addToManualPower(-0.01);
+            System.out.println("- newPower="+newPower);
         });
 
         Command powerOff = Commands.runOnce(() -> {
             System.out.println("Turned off...");
-            gmt.manualPower = null;
-            //gmt.
-            //slr.reset(0);
-            //motor.set(0.0);
+            gmt.stop();
         });
-        
 
+        Command powerOn = Commands.runOnce(() -> {
+            System.out.println("Turned on...");
+            gmt.start();
+        });
+
+        Command bumpTargetUp = Commands.run(() -> {
+            System.out.println("Increment target up...");
+            gmt.getPID().incrementTarget(1);
+        });
+
+        Command bumpTargetDown = Commands.run(() -> {
+            System.out.println("Decrement target up...");
+            gmt.getPID().incrementTarget(-1);
+        });
+
+        
         CommandScheduler.getInstance().getDefaultButtonLoop().clear();
 
         rc.driverPad.pov(0).onTrue(addPower);
-        rc.driverPad.pov(270).onTrue(lowerPower);                
+        rc.driverPad.pov(180).onTrue(lowerPower);
+
+        rc.driverPad.pov(90).whileTrue(bumpTargetDown);
+        rc.driverPad.pov(270).whileTrue(bumpTargetUp);
 
         BooleanSupplier anyBumperPressed = 
             () -> 
                 rc.driverPad.getHID().getLeftBumperButtonPressed() || 
                 rc.driverPad.getHID().getRightBumperButtonPressed();
+
         new Trigger(anyBumperPressed).onTrue(powerOff);
 
+        rc.driverPad.start().onTrue(powerOn);
+
         rc.driverPad.y().onTrue(Commands.runOnce(() -> gmt.getPID().setTarget(0)));
-        rc.driverPad.x().onTrue(Commands.runOnce(() -> gmt.getPID().setTarget(90)));
-        rc.driverPad.b().onTrue(Commands.runOnce(() -> gmt.getPID().setTarget(270)));
+        rc.driverPad.x().onTrue(Commands.runOnce(() -> gmt.getPID().setTarget(81)));
+        rc.driverPad.b().onTrue(Commands.runOnce(() -> gmt.getPID().setTarget(278)));
         rc.driverPad.a().onTrue(Commands.runOnce(() -> gmt.getPID().setTarget(180)));
-
-        
-
     }    
     
 }
