@@ -43,12 +43,12 @@ public class GenericMechanismTest extends TimedRobot {
          * but if we do that, then we need too many files for an example.
          */
         Command addPower = Commands.runOnce(() -> {            
-            double newPower = gmt.addToManualPower(0.01);
+            double newPower = gmt.incrementManualPower(0.01);
             System.out.println("+ newPower="+newPower);
         });
 
         Command lowerPower = Commands.runOnce(() -> {
-            double newPower = gmt.addToManualPower(-0.01);
+            double newPower = gmt.incrementManualPower(-0.01);
             System.out.println("- newPower="+newPower);
         });
 
@@ -63,13 +63,14 @@ public class GenericMechanismTest extends TimedRobot {
         });
 
         Command bumpTargetUp = Commands.run(() -> {
-            System.out.println("Increment target up...");
-            gmt.getPID().incrementTarget(1);
+            System.out.println("Increment target 'up'...");            
+            gmt.incrementTarget(1);
+            
         });
 
         Command bumpTargetDown = Commands.run(() -> {
-            System.out.println("Decrement target up...");
-            gmt.getPID().incrementTarget(-1);
+            System.out.println("Decrement target 'down'...");
+            gmt.incrementTarget(-1);
         });
 
         
@@ -90,10 +91,10 @@ public class GenericMechanismTest extends TimedRobot {
 
         rc.driverPad.start().onTrue(powerOn);
 
-        rc.driverPad.y().onTrue(Commands.runOnce(() -> gmt.getPID().setTarget(0)));
-        rc.driverPad.x().onTrue(Commands.runOnce(() -> gmt.getPID().setTarget(81)));
-        rc.driverPad.b().onTrue(Commands.runOnce(() -> gmt.getPID().setTarget(278)));
-        rc.driverPad.a().onTrue(Commands.runOnce(() -> gmt.getPID().setTarget(180)));
+        rc.driverPad.y().onTrue(Commands.runOnce(() -> gmt.setTarget(0.0)));
+        rc.driverPad.x().onTrue(Commands.runOnce(() -> gmt.setTarget(81.0)));
+        rc.driverPad.b().onTrue(Commands.runOnce(() -> gmt.setTarget(278.0)));
+        rc.driverPad.a().onTrue(Commands.runOnce(() -> gmt.setTarget(180.0)));
     }    
     
 }
